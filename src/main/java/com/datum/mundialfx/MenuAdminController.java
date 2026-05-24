@@ -62,12 +62,17 @@ public class MenuAdminController implements Initializable {
     // usuarios
     @FXML
     private void irUsuario() {
-        System.out.println("Ir usuarios");
+        //System.out.println("Ir usuarios");
+        try {
+            App.setRoot("Usuarios");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // cerrar sesion
     @FXML
-    
+
     private void cerrarSesion() {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

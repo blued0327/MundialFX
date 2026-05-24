@@ -17,7 +17,7 @@ public class UsuarioDao {
     public int insertar(UsuarioModel user) {
 
         //query -- se cambia por los procedures sp--tengan cuidado con esto!!!!!
-        String query = "select sp_cliente_insertar(?,?,?,?)";
+        String query = "select sp_usuario_insertar(?,?,?,?)";
         //try
         try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, user.getUsername());
@@ -43,7 +43,7 @@ public class UsuarioDao {
     public boolean actualizar(UsuarioModel user) {
 
         //query
-        String query = "SELECT sp_actualizar_cliente (?, ?, ?, ?, ?)";
+        String query = "SELECT sp_usuario_actualizar(?, ?, ?, ?, ?)";
 
         //try
         try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
@@ -87,7 +87,8 @@ public class UsuarioDao {
 
     }
 
-    //cambiar estado
+    //cambiar estado solo servia para poner el otro estado
+    /*
     public boolean cambiarEstado(int id, boolean estado) {
         //query
         String query = "SELECT sp_usuario_eliminar(?)";
@@ -105,7 +106,25 @@ public class UsuarioDao {
             return false;
         }
 
+    }*/
+    public boolean cambiarEstado(int id, boolean estado) {
+    String query = "SELECT sp_usuario_cambiar_estado(?, ?)";
+    try (Connection conn = CreateConnection.getInstancia().getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+
+        ps.setInt(1, id);
+        ps.setBoolean(2, estado);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getBoolean(1);
+        }
+        return false;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
     }
+}
+    
 
     //buscar por username
     public UsuarioModel buscarPorUsername(String username) {
