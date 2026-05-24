@@ -1,13 +1,12 @@
 package com.datum.mundialfx;
 
-import javafx.fxml.FXML;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 //
@@ -36,8 +35,24 @@ public class LoginController {
     private final UsuarioController controller = new UsuarioController();
 
     @FXML
-
+    
+    
+    
+    //abrir menu
+    private void abrirMenu(){
+        try{
+            if(Sesion.esAdmin()){
+                App.setRoot("MenuAdmin"); //appp es el cambia la vista
+            }else{
+                App.setRoot("MenuVendedor");
+            }
+        }catch(Exception e){
+            lblError.setText("Error al abrir el Menu");
+            e.printStackTrace();
+        }
+    }
     //ingresar
+    @FXML // QUE NO SE ME OLVIDE PONERLE ESTO
     private void ingresar() {
         //sirve para limpiar
         lblError.setText("");
@@ -76,6 +91,9 @@ public class LoginController {
             Sesion.iniciar(usuario);                    //aqui traera admin o user de la db osea que soy
            mostrarMensaje("Bienvenido,  " + usuario.getUsername() + "!");
             //menu principal
+            abrirMenu();
+            
+            
 
         } else {
             lblError.setText("Usuario o contraseña incorrectos");
@@ -84,6 +102,8 @@ public class LoginController {
         }
 
     }
+    
+    
 
     //cancelar
     @FXML
@@ -101,6 +121,7 @@ public class LoginController {
     }
     
     //mensaje exitoso
+    @FXML
     private void mostrarMensaje(String mensaje){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Acceso exitoso");
@@ -109,5 +130,6 @@ public class LoginController {
         alert.showAndWait(); //abre un pop-up creo que asi se escribe xD
                 
     }
+    
 
 }
