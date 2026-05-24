@@ -198,7 +198,6 @@ public class BoletosDao {
         return t;
     }
  
-    /** Para sp_ticket_disponibles: id, numero_asiento, seccion, precio (sin partido_id ni estado) */
     private TicketModel mapearResultadoDisponible(ResultSet rs, int partidoId) throws SQLException {
         TicketModel t = new TicketModel();
         t.setId(rs.getInt("id"));
