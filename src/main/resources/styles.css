@@ -66,3 +66,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .boton-buscar:hover {
     -fx-background-color: #08164B;
 }
+
+.menu-boton {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 13;
+    -fx-padding: 12 20;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER;
+    -fx-background-radius: 8;
+}
+.menu-boton:hover {
+    -fx-background-color: #1652B9;
+}
+.menu-boton-salir {
+    -fx-background-color: #D2303E;
+    -fx-text-fill: white;
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-padding: 12 20;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER;
+    -fx-background-radius: 8;
+}
+.menu-boton-salir:hover {
+    -fx-background-color: #A61E2A;
+}

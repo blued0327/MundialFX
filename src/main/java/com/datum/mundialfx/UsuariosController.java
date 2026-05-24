@@ -34,6 +34,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import com.mundial.app.util.Sesion;
 
 public class UsuariosController implements Initializable {
 
@@ -89,6 +90,20 @@ public class UsuariosController implements Initializable {
     @FXML
     private TextField txtBuscar;
 
+    //boton volver
+    @FXML
+    private void volverMenu() {
+        try {
+            //segun el rol regresa al menu que corresponde
+            if (Sesion.esAdmin()) {
+                App.setRoot("MenuAdmin");
+            } else {
+                App.setRoot("MenuVendedor");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     //instancias
     private final UsuarioController controller = new UsuarioController();
     private final ObservableList<UsuarioModel> lista = FXCollections.observableArrayList(); //sirve para actualizar atumaticamente una tabla
@@ -174,32 +189,32 @@ public class UsuariosController implements Initializable {
         //cargar tabla al abrir
         cargarTabla();
         txtBuscar.textProperty().addListener((obs, oldVal, newVal) -> {
-        buscarEnTabla(newVal);
-});
+            buscarEnTabla(newVal);
+        });
     }
-    
+
     //funcion para buscar
     private void buscarEnTabla(String texto) {
-    //si esta vacio mostramos todo
-    if (texto == null || texto.trim().isEmpty()) {
-        tablaUsuarios.setItems(lista);
-        tablaUsuarios.refresh(); //sin esto cada que buscamos empiezan a desaparecer los bontes
-        return;
-    }
-
-    String filtro = texto.toLowerCase().trim();
-    ObservableList<UsuarioModel> filtrados = FXCollections.observableArrayList();
-
-    //recorremos la lista original y guardamos los que coincidan
-    for (UsuarioModel u : lista) {
-        if (u.getUsername().toLowerCase().contains(filtro)) {
-            filtrados.add(u);
+        //si esta vacio mostramos todo
+        if (texto == null || texto.trim().isEmpty()) {
+            tablaUsuarios.setItems(lista);
+            tablaUsuarios.refresh(); //sin esto cada que buscamos empiezan a desaparecer los bontes
+            return;
         }
-    }
 
-    tablaUsuarios.setItems(filtrados);
-     tablaUsuarios.refresh(); 
-}
+        String filtro = texto.toLowerCase().trim();
+        ObservableList<UsuarioModel> filtrados = FXCollections.observableArrayList();
+
+        //recorremos la lista original y guardamos los que coincidan
+        for (UsuarioModel u : lista) {
+            if (u.getUsername().toLowerCase().contains(filtro)) {
+                filtrados.add(u);
+            }
+        }
+
+        tablaUsuarios.setItems(filtrados);
+        tablaUsuarios.refresh();
+    }
 
     //funcion para cargar la tabla
     private void cargarTabla() {

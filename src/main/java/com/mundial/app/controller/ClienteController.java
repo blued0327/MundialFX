@@ -8,7 +8,7 @@ import com.mundial.app.dao.ClienteDao;
 import com.mundial.app.model.ClienteModel;
 import java.util.List;
 
-public class ClientesController {
+public class ClienteController {
 
     private final ClienteDao dao = new ClienteDao();
 

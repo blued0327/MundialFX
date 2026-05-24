@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" stylesheets="@../../../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.datum.mundialfx.VentasController">
+   <top>
+      <HBox spacing="10.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <children>
+            <Button text="← Volver" onAction="#volverMenu" styleClass="menu-boton-volver" mnemonicParsing="false" />
+            <Label style="-fx-text-fill: #08164B; -fx-font-weight: bold; -fx-font-size: 20;" text="Módulo de Ventas" />
+            <Region HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <VBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="lblClienteSeleccionado" style="-fx-text-fill: #08164B; -fx-font-size: 16;" text="Cargando cliente..." />
+            <Label text="Modulo en construccion" style="-fx-text-fill: #5a647d; -fx-font-size: 14;" />
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

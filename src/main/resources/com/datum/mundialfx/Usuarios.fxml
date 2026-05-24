@@ -23,15 +23,16 @@
                 <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
             </padding>
             <children>
+            <Button mnemonicParsing="false" onAction="#volverMenu" prefHeight="33.0" prefWidth="103.0" styleClass="boton-editar" text="Volver" />
                 <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../../Images/logo.png" />
                     </image>
                 </ImageView>
-                <Label style="-fx-text-fill: #08164B; -fx-font-weight: bold; -fx-font-size: 20;" text="Gestión de Usuarios" />
+                <Label prefHeight="30.0" prefWidth="241.0" style="-fx-text-fill: #08164B; -fx-font-weight: bold; -fx-font-size: 20;" text="Gestión de Usuarios" />
                 <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                <TextField fx:id="txtBuscar" prefWidth="220.0" promptText="Buscar por usuario" style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
-                <Button fx:id="btnNuevo" mnemonicParsing="false" onAction="#abrirFormulario" styleClass="boton-insertar" text="Nuevo Usuario" />
+                <TextField fx:id="txtBuscar" prefHeight="35.0" prefWidth="153.0" promptText="Buscar por usuario" style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
+                <Button fx:id="btnNuevo" mnemonicParsing="false" onAction="#abrirFormulario" prefHeight="33.0" prefWidth="157.0" styleClass="boton-insertar" text="Nuevo Usuario" />
             </children>
         </HBox>
     </top>
