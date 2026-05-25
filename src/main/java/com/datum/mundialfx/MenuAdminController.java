@@ -1,5 +1,6 @@
 package com.datum.mundialfx;
 
+import com.mundial.app.controller.UsuarioController;
 import com.mundial.app.util.Sesion;
 
 import javafx.application.Platform;
@@ -32,7 +33,11 @@ public class MenuAdminController implements Initializable {
     //   ventas
     @FXML
     private void irVentas() {
-        System.out.println("Ir ventas");
+        try {
+            App.setRoot("Ventas");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // clientes
@@ -80,23 +85,49 @@ public class MenuAdminController implements Initializable {
         }
     }
 
-    // cerrar sesion
     @FXML
+    private void irLog() {
+        try {
+            App.setRoot("Log");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    // cerrar sesion -- con quetambien guarde el logiut de la ip
+    @FXML
     private void cerrarSesion() {
 
+        //ventana para confirmar si si quiere salir
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
         alert.setTitle("Cerrar sesion");
         alert.setHeaderText(null);
         alert.setContentText("¿Desea cerrar sesion?");
 
+        //espera la respuesta del usuario
         alert.showAndWait().ifPresent(respuesta -> {
 
+            //si le dio ok entonces sigue
             if (respuesta == ButtonType.OK) {
+
+                //guardar el logout en logs antes de destruir la sesion
+                UsuarioController controller = new UsuarioController();
+
+                //agrega el log de salida
+                controller.logout(
+                        Sesion.getUsuario().getId(),
+                        Sesion.obtenerIp()
+                );
+
+                //cerrar la sesion global
                 Sesion.cerrar();
+
                 try {
+
+                    //regresar al login
                     App.setRoot("Login");
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

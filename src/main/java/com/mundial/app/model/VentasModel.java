@@ -1,16 +1,13 @@
-// MIGRACION: package agregado (en el origen estaba comentado como //package model;)
 package com.mundial.app.model;
-
-
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
-
 public class VentasModel {
- private int id;
+
+    private int id;
     private LocalDateTime fecha;
     private int clienteId;
     private int usuarioId;
@@ -20,32 +17,33 @@ public class VentasModel {
     private BigDecimal total;
     private boolean anulada;
     private String numeroFactura;
- 
+
     // IDs de tickets comprados (para registrar la venta)
     private List<Integer> ticketIds;
- 
-    
- 
+    private String clienteNombre;
+    private String vendedor;
+
+    public VentasModel(String clienteNombre, String vendedor) {
+        this.clienteNombre = clienteNombre;
+        this.vendedor = vendedor;
+    }
+
     // constructor para registrar una venta nueva
+    public VentasModel(int clienteId, int usuarioId, BigDecimal subtotal, BigDecimal descuento, BigDecimal totalIva, BigDecimal total, List<Integer> ticketIds) {
+        // id lo genera sql con SERIAL
+        // fecha lo genera sql con DEFAULT CURRENT_TIMESTAMP
+        // anulada arranca siempre en FALSE por defecto
+        // numeroFactura lo genera el SP con la secuencia seq_factura
+        this.clienteId = clienteId;
+        this.usuarioId = usuarioId;
+        this.subtotal = subtotal;
+        this.descuento = descuento;
+        this.totalIva = totalIva;
+        this.total = total;
+        this.ticketIds = ticketIds;
+    }
 
-        public VentasModel(int clienteId, int usuarioId, BigDecimal subtotal, BigDecimal descuento, BigDecimal totalIva, BigDecimal total, List<Integer> ticketIds) {
-            // id lo genera sql con SERIAL
-            // fecha lo genera sql con DEFAULT CURRENT_TIMESTAMP
-            // anulada arranca siempre en FALSE por defecto
-            // numeroFactura lo genera el SP con la secuencia seq_factura
-            this.clienteId = clienteId; 
-            this.usuarioId = usuarioId; 
-            this.subtotal = subtotal;
-            this.descuento = descuento;
-            this.totalIva = totalIva;
-            this.total = total;
-            this.ticketIds = ticketIds;
-        }
-    
-    
- 
     // Para consultar una venta existente
-
     public VentasModel(int id, LocalDateTime fecha, int clienteId, int usuarioId, BigDecimal subtotal, BigDecimal descuento, BigDecimal totalIva, BigDecimal total, boolean anulada, String numeroFactura, List<Integer> ticketIds) {
         this.id = id;
         this.fecha = fecha;
@@ -58,6 +56,42 @@ public class VentasModel {
         this.anulada = anulada;
         this.numeroFactura = numeroFactura;
         this.ticketIds = ticketIds;
+    }
+
+    //contructor vacio
+    public VentasModel() {
+    }
+
+    public VentasModel(int id, LocalDateTime fecha, int clienteId, int usuarioId, BigDecimal subtotal, BigDecimal descuento, BigDecimal totalIva, BigDecimal total, boolean anulada, String numeroFactura, List<Integer> ticketIds, String clienteNombre, String vendedor) {
+        this.id = id;
+        this.fecha = fecha;
+        this.clienteId = clienteId;
+        this.usuarioId = usuarioId;
+        this.subtotal = subtotal;
+        this.descuento = descuento;
+        this.totalIva = totalIva;
+        this.total = total;
+        this.anulada = anulada;
+        this.numeroFactura = numeroFactura;
+        this.ticketIds = ticketIds;
+        this.clienteNombre = clienteNombre;
+        this.vendedor = vendedor;
+    }
+
+    public String getClienteNombre() {
+        return clienteNombre;
+    }
+
+    public void setClienteNombre(String clienteNombre) {
+        this.clienteNombre = clienteNombre;
+    }
+
+    public String getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(String vendedor) {
+        this.vendedor = vendedor;
     }
 
     public int getId() {
@@ -147,7 +181,7 @@ public class VentasModel {
     public void setTicketIds(List<Integer> ticketIds) {
         this.ticketIds = ticketIds;
     }
-    
+
     @Override
     public String toString() {
         return "Factura " + numeroFactura + " - Total: Q" + total + (anulada ? " [ANULADA]" : "");

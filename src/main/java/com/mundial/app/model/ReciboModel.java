@@ -4,19 +4,19 @@
  */
 package com.mundial.app.model;
 
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 /**
  *
  * @author rchar
  */
 public class ReciboModel {
-    
-     private int reciboNro;
+
+    private int reciboNro;
     private String numeroFactura;
     private LocalDateTime fecha;
- 
+
     private String clienteNombre;
     private String clienteEmail;
     private String vendedor;
@@ -24,12 +24,12 @@ public class ReciboModel {
     private String partido;
     private LocalDateTime fechaPartido;
     private String estadio;
- 
+
     private String numeroAsiento;
     private String seccion;
     private BigDecimal precio;
     private BigDecimal iva;
- 
+
     private BigDecimal subtotal;
     private BigDecimal descuento;
     private BigDecimal totalIva;
@@ -170,10 +170,10 @@ public class ReciboModel {
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
-    
-     @Override
+
+    @Override
     public String toString() {
         return "Asiento " + numeroAsiento + " - " + seccion + " - Q" + precio;
     }
-    
+
 }

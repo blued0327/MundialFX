@@ -9,20 +9,21 @@ import com.mundial.app.model.VentasModel;
 import com.mundial.app.model.ReciboModel;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *
  * @author rchar
  */
-public class VentasController {
-    
+public class VentaController {
+
     private final VentasDao dao = new VentasDao();
- 
+
     public VentasModel calcularTotales(int clienteId, int usuarioId,
-                                       List<Integer> ticketIds,
-                                       List<Double> precios) {
+            List<Integer> ticketIds,
+            List<Double> precios) {
         return dao.calcularTotales(clienteId, usuarioId, ticketIds, precios);
     }
- 
+
     public int registrarVenta(VentasModel venta) {
         try {
             return dao.registrarVenta(venta);
@@ -31,7 +32,7 @@ public class VentasController {
             return -1;
         }
     }
- 
+
     public boolean anularVenta(int ventaId, int usuarioId, String motivo) {
         try {
             return dao.anularVenta(ventaId, usuarioId, motivo);
@@ -40,7 +41,7 @@ public class VentasController {
             return false;
         }
     }
-    
+
     public List<ReciboModel> obtenerRecibo(int ventaId) {
         try {
             return dao.obtenerRecibo(ventaId);
@@ -48,5 +49,36 @@ public class VentasController {
             System.err.println("Error al obtener recibo: " + e.getMessage());
             return new ArrayList<>();
         }
-}
+    }
+
+    public List<VentasModel> listarTodas() {
+
+        try {
+            return dao.listarTodas();
+        } catch (Exception e) {
+
+            System.err.println(
+                    "Error listando ventas: "
+                    + e.getMessage()
+            );
+
+            return new ArrayList<>();
+        }
+    }
+
+    public List<VentasModel> buscarPorFactura(String numeroFactura) {
+
+        try {
+            return dao.buscarPorFactura(numeroFactura);
+
+        } catch (Exception e) {
+
+            System.err.println(
+                    "Error buscando factura: "
+                    + e.getMessage()
+            );
+
+            return new ArrayList<>();
+        }
+    }
 }
