@@ -73,7 +73,7 @@
         </VBox>
     </left>
     <center>
-        <VBox prefHeight="200.0" prefWidth="100.0" spacing="8.0" style="-fx-background-color: #F4F6F8; -fx-padding: 30;" BorderPane.alignment="TOP_LEFT">
+        <VBox prefHeight="624.0" prefWidth="771.0" spacing="8.0" style="-fx-background-color: #F4F6F8; -fx-padding: 30;" BorderPane.alignment="TOP_LEFT">
             <children>
                 <Label fx:id="lblBienvenida" style="-fx-text-fill: #08164B; -fx-font: Bold 22;" text="Bienvenido">
                     <font>
