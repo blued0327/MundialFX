@@ -36,8 +36,12 @@ public class PartidoController {
     }
 
     // ELIMINAR pone cancelado vía SP
+    /*
     public boolean eliminarPartido(int id) {
         return dao.eliminar(id);
+    }*/
+    public boolean cambiarEstado(int id, String estado) {
+        return dao.cambiarEstado(id, estado);
     }
 
     // LISTAR TODOS

@@ -12,14 +12,10 @@ import javafx.scene.control.Label;
 
 public class MenuVendedorController {
 
-
     private Label lblBienvenida;
 
     @FXML
     private Label lblRol;
-
- 
-    
 
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -50,6 +46,11 @@ public class MenuVendedorController {
     @FXML
     private void irPartido() {
         System.out.println("Ir partidos");
+        try {
+            App.setRoot("Partidos");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // tickets
@@ -57,8 +58,6 @@ public class MenuVendedorController {
     private void irTicket() {
         System.out.println("Ir tickets");
     }
-
-
 
     // cerrar sesion
     @FXML
@@ -84,5 +83,3 @@ public class MenuVendedorController {
         });
     }
 }
-    
-

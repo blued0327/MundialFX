@@ -14,14 +14,13 @@ public class PartidoDao {
 
     public static final String ESTADO_DISPONIBLE = "DISPONIBLE";
     public static final String ESTADO_FINALIZADO = "FINALIZADO";
-    public static final String ESTADO_CANCELADO  = "CANCELADO";
+    public static final String ESTADO_CANCELADO = "CANCELADO";
 
     // INSERTAR  devuelve id generado, -1 si falla
     // SP: sp_partido_insertar(local, visitante, fecha, estadio, ciudad, capacidad, estado)
     public int insertar(PartidoModel p) {
         String query = "SELECT sp_partido_insertar(?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = CreateConnection.getInstancia().getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setString(1, p.getEquipoLocal());
             ps.setString(2, p.getEquipoVisitante());
@@ -32,7 +31,9 @@ public class PartidoDao {
             ps.setString(7, p.getEstado());
 
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getInt(1);
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
             return -1;
 
         } catch (SQLException e) {
@@ -42,11 +43,9 @@ public class PartidoDao {
     }
 
     // ACTUALIZAR — devuelve true si modificó
-
     public boolean actualizar(PartidoModel p) {
         String query = "SELECT sp_partido_actualizar(?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = CreateConnection.getInstancia().getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setInt(1, p.getId());
             ps.setString(2, p.getEquipoLocal());
@@ -58,7 +57,9 @@ public class PartidoDao {
             ps.setString(8, p.getEstado());
 
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getBoolean(1);
+            if (rs.next()) {
+                return rs.getBoolean(1);
+            }
             return false;
 
         } catch (SQLException e) {
@@ -68,33 +69,32 @@ public class PartidoDao {
     }
 
     // ELIMINAR cambia estado a cancelado vía sp y devuelve true si cambió
-
+    /*
     public boolean eliminar(int id) {
         String query = "SELECT sp_partido_eliminar(?)";
-        try (Connection conn = CreateConnection.getInstancia().getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getBoolean(1);
+            if (rs.next()) {
+                return rs.getBoolean(1);
+            }
             return false;
 
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-    }
-
+    }*/
     // LISTAR TODOS
-
     public List<PartidoModel> listarTodos() {
         List<PartidoModel> lista = new ArrayList<>();
         String query = "SELECT * FROM sp_partido_todos()";
-        try (Connection conn = CreateConnection.getInstancia().getConnection();
-             PreparedStatement ps = conn.prepareStatement(query);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
 
-            while (rs.next()) lista.add(mapear(rs));
+            while (rs.next()) {
+                lista.add(mapear(rs));
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,12 +106,13 @@ public class PartidoDao {
     // SP: sp_partido_id(id)
     public PartidoModel buscarPorId(int id) {
         String query = "SELECT * FROM sp_partido_id(?)";
-        try (Connection conn = CreateConnection.getInstancia().getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return mapear(rs);
+            if (rs.next()) {
+                return mapear(rs);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -120,16 +121,16 @@ public class PartidoDao {
     }
 
     // buscar por partido busqueda parcial ILIKE desde el SP
-
     public List<PartidoModel> buscarPorEquipo(String texto) {
         List<PartidoModel> lista = new ArrayList<>();
         String query = "SELECT * FROM sp_partido_equipo(?)";
-        try (Connection conn = CreateConnection.getInstancia().getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setString(1, texto);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) lista.add(mapear(rs));
+            while (rs.next()) {
+                lista.add(mapear(rs));
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -137,8 +138,7 @@ public class PartidoDao {
         return lista;
     }
 
-    // MAPEAR ResultSet -> PartidoModel
-
+    //  ResultSet  PartidoModel
     private PartidoModel mapear(ResultSet rs) throws SQLException {
         PartidoModel p = new PartidoModel();
         p.setId(rs.getInt("id"));
@@ -146,7 +146,9 @@ public class PartidoDao {
         p.setEquipoVisitante(rs.getString("equipo_visitante"));
 
         Timestamp fecha = rs.getTimestamp("fecha");
-        if (fecha != null) p.setFecha(fecha.toLocalDateTime());
+        if (fecha != null) {
+            p.setFecha(fecha.toLocalDateTime());
+        }
 
         p.setEstadio(rs.getString("estadio"));
         p.setCiudad(rs.getString("ciudad"));
@@ -154,8 +156,30 @@ public class PartidoDao {
         p.setEstado(rs.getString("estado"));
 
         Timestamp creadoEn = rs.getTimestamp("creado_en");
-        if (creadoEn != null) p.setCreadoEn(creadoEn.toLocalDateTime());
+        if (creadoEn != null) {
+            p.setCreadoEn(creadoEn.toLocalDateTime());
+        }
 
         return p;
     }
+
+    //sp agregado porque no funcionaba el otro
+    public boolean cambiarEstado(int id, String estado) {
+        String query = "SELECT sp_partido_cambiar_estado(?, ?)";
+        try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, id);
+            ps.setString(2, estado);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getBoolean(1);
+            }
+            return false;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

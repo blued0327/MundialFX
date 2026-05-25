@@ -50,6 +50,11 @@ public class MenuAdminController implements Initializable {
     @FXML
     private void irPartido() {
         System.out.println("Ir partidos");
+        try {
+            App.setRoot("Partidos");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // tickets
