@@ -70,6 +70,15 @@
                         <Font size="13.0" />
                     </font>
                 </Label>
+                <BorderPane prefHeight="443.0" prefWidth="720.0">
+               <center>
+                  <ImageView fitHeight="483.0" fitWidth="639.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                     <image>
+                        <Image url="@../../../Images/Menu.png" />
+                     </image>
+                  </ImageView>
+               </center>
+            </BorderPane>
             </children>
         </VBox>
     </center>
