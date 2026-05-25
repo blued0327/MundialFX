@@ -4,9 +4,11 @@ package com.mundial.app.dao;
 
 import com.mundial.app.connection.CreateConnection;
 import com.mundial.app.model.VentasModel;
+import com.mundial.app.model.ReciboModel;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.List;
+import java.util.ArrayList;
 
 
 public class VentasDao {
@@ -99,5 +101,43 @@ public class VentasDao {
             BigDecimal.valueOf(total),
             ticketIds
         );
+    }
+    public List<ReciboModel> obtenerRecibo(int ventaId) throws SQLException {
+        String sql = "SELECT * FROM sp_venta_obtener_recibo(?)";
+ 
+        List<ReciboModel> filas = new ArrayList<>();
+ 
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, ventaId);
+ 
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) filas.add(mapearRecibo(rs));
+            }
+        }
+        return filas;
+    }
+ 
+ 
+    private ReciboModel mapearRecibo(ResultSet rs) throws SQLException {
+        ReciboModel rm = new ReciboModel();
+        
+        rm.setReciboNro(rs.getInt("recibo_nro"));
+        rm.setNumeroFactura(rs.getString("numero_factura"));
+        rm.setFecha(rs.getTimestamp("fecha").toLocalDateTime());
+        rm.setClienteNombre(rs.getString("cliente_nombre"));
+        rm.setClienteEmail(rs.getString("cliente_email"));
+        rm.setVendedor(rs.getString("vendedor"));
+        rm.setPartido(rs.getString("partido"));
+        rm.setFechaPartido(rs.getTimestamp("fecha_partido").toLocalDateTime());
+        rm.setEstadio(rs.getString("estadio"));
+        rm.setNumeroAsiento(rs.getString("numero_asiento"));
+        rm.setSeccion(rs.getString("seccion"));
+        rm.setPrecio(rs.getBigDecimal("precio"));
+        rm.setIva(rs.getBigDecimal("iva"));
+        rm.setSubtotal(rs.getBigDecimal("subtotal"));
+        rm.setDescuento(rs.getBigDecimal("descuento"));
+        rm.setTotalIva(rs.getBigDecimal("total_iva"));
+        rm.setTotal(rs.getBigDecimal("total"));
+        return rm;
     }
 }

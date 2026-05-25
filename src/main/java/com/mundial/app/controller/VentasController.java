@@ -6,6 +6,8 @@ package com.mundial.app.controller;
 
 import com.mundial.app.dao.VentasDao;
 import com.mundial.app.model.VentasModel;
+import com.mundial.app.model.ReciboModel;
+import java.util.ArrayList;
 import java.util.List;
 /**
  *
@@ -15,14 +17,12 @@ public class VentasController {
     
     private final VentasDao dao = new VentasDao();
  
-    // calcular totales
     public VentasModel calcularTotales(int clienteId, int usuarioId,
                                        List<Integer> ticketIds,
                                        List<Double> precios) {
         return dao.calcularTotales(clienteId, usuarioId, ticketIds, precios);
     }
  
-    // Rregistrar ventas
     public int registrarVenta(VentasModel venta) {
         try {
             return dao.registrarVenta(venta);
@@ -32,7 +32,6 @@ public class VentasController {
         }
     }
  
-    // anular ventas
     public boolean anularVenta(int ventaId, int usuarioId, String motivo) {
         try {
             return dao.anularVenta(ventaId, usuarioId, motivo);
@@ -41,4 +40,13 @@ public class VentasController {
             return false;
         }
     }
+    
+    public List<ReciboModel> obtenerRecibo(int ventaId) {
+        try {
+            return dao.obtenerRecibo(ventaId);
+        } catch (Exception e) {
+            System.err.println("Error al obtener recibo: " + e.getMessage());
+            return new ArrayList<>();
+        }
+}
 }
