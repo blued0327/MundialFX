@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@../../../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.datum.mundialfx.PartidosController">
+   <top>
+      <HBox prefHeight="100.0" prefWidth="844.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <children>
+            <Button mnemonicParsing="false" onAction="#volverMenu" prefHeight="33.0" prefWidth="103.0" styleClass="menu-boton-volver" text="← Volver" />
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/logo.png" />
+               </image>
+            </ImageView>
+            <Label prefHeight="30.0" prefWidth="241.0" style="-fx-text-fill: #08164B; -fx-font-weight: bold; -fx-font-size: 20;" text="Gestión de Partidos" />
+            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <TextField fx:id="txtBuscar" prefHeight="35.0" prefWidth="180.0" promptText="Buscar por equipo..." style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
+            <Button fx:id="btnNuevo" mnemonicParsing="false" onAction="#abrirFormulario" prefHeight="33.0" prefWidth="157.0" styleClass="boton-insertar" text="Nuevo Partido" />
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <VBox prefHeight="498.0" prefWidth="971.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" />
+         </padding>
+         <children>
+            <TableView fx:id="tablaPartidos" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="colId" prefWidth="50.0" text="ID" />
+                  <TableColumn fx:id="colPartido" prefWidth="180.0" text="Local vs Visitante" />
+                  <TableColumn fx:id="colFecha" prefWidth="120.0" text="Fecha" />
+                  <TableColumn fx:id="colEstadio" prefWidth="120.0" text="Estadio" />
+                  <TableColumn fx:id="colEstado" prefWidth="100.0" text="Estado" />
+                  <TableColumn fx:id="colAcciones" prefWidth="220.0" text="Acciones" />
+               </columns>
+               <placeholder>
+                  <Label text="No hay partidos registrados." />
+               </placeholder>
+            </TableView>
+         </children>
+      </VBox>
+   </center>
+   <right>
+      <VBox fx:id="panelFormulario" managed="false" prefWidth="300.0" spacing="10.0" style="-fx-background-color: white; -fx-border-color: #CDD4E8; -fx-border-width: 0 0 0 1; -fx-padding: 20;" visible="false" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <Label fx:id="lblTituloForm" style="-fx-text-fill: #08164B; -fx-font-weight: bold; -fx-font-size: 15;" text="Nuevo Partido" />
+            <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Equipo Local" />
+            <TextField fx:id="txtLocal" promptText="Ingrese equipo local" style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
+            <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Equipo Visitante" />
+            <TextField fx:id="txtVisitante" promptText="Ingrese equipo visitante" style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
+            <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Fecha del partido" />
+            <DatePicker fx:id="dpFecha" maxWidth="1.7976931348623157E308" />
+            <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Hora" />
+            <HBox spacing="6.0">
+               <children>
+                  <ComboBox fx:id="cmbHora" prefWidth="120.0" promptText="HH" />
+                  <Label text=":" style="-fx-font-weight: bold; -fx-font-size: 16;" />
+                  <ComboBox fx:id="cmbMinuto" prefWidth="120.0" promptText="MM" />
+               </children>
+            </HBox>
+            <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Estadio" />
+            <TextField fx:id="txtEstadio" promptText="Ingrese estadio" style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
+            <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Ciudad" />
+            <TextField fx:id="txtCiudad" promptText="Ingrese ciudad" style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
+            <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Capacidad" />
+            <TextField fx:id="txtCapacidad" promptText="Ej: 87000" style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
+            <Label fx:id="lblErrorForm" textFill="#d2303e" wrapText="true" />
+            <HBox spacing="8.0">
+               <children>
+                  <Button fx:id="btnGuardar" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#guardar" styleClass="boton-insertar" text="Guardar" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnCancelar" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cerrarFormulario" styleClass="boton-editar" text="Cancelar" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </right>
+</BorderPane>

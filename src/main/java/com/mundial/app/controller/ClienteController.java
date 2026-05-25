@@ -2,16 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-// MIGRACION: package cambiado de "controller" a "com.mundial.app.controller"
 package com.mundial.app.controller;
 
-// MIGRACION: import ajustado de "dao.ClienteDao" a "com.mundial.app.dao.ClienteDao"
 import com.mundial.app.dao.ClienteDao;
-// MIGRACION: import ajustado de "model.ClienteModel" a "com.mundial.app.model.ClienteModel"
 import com.mundial.app.model.ClienteModel;
 import java.util.List;
 
-public class ClientesController {
+public class ClienteController {
 
     private final ClienteDao dao = new ClienteDao();
 
@@ -21,18 +18,18 @@ public class ClientesController {
     }
 
     // Registrar
-    public void registrarCliente(String nombre, String apellido, String telefono, String email, String direccion) {
+    public boolean registrarCliente(String nombre, String apellido, String telefono, String email, String direccion) {
         ClienteModel cm = new ClienteModel();
         cm.setNombre(nombre);
         cm.setApellido(apellido);
         cm.setTelefono(telefono);
         cm.setEmail(email);
         cm.setDireccion(direccion);
-        dao.registrarCliente(cm);
+        return dao.registrarCliente(cm);
     }
 
     // Actualizar
-    public void actualizarCliente(int id, String nombre, String apellido, String telefono, String email, String direccion) {
+    public boolean actualizarCliente(int id, String nombre, String apellido, String telefono, String email, String direccion) {
         ClienteModel cm = new ClienteModel();
         cm.setId(id);
         cm.setNombre(nombre);
@@ -40,12 +37,12 @@ public class ClientesController {
         cm.setTelefono(telefono);
         cm.setEmail(email);
         cm.setDireccion(direccion);
-        dao.actualizarCliente(cm);
+        return dao.actualizarCliente(cm);
     }
 
     // Cambiar estado (activo/inactivo)
-    public void cambiarEstado(int id) {
-        dao.cambiarEstado(id);
+    public boolean cambiarEstado(int id, boolean estado) {
+        return dao.cambiarEstado(id, estado);
     }
 
     // Buscar por ID

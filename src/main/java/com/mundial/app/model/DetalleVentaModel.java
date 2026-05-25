@@ -4,6 +4,7 @@ package com.mundial.app.model;
 import java.math.BigDecimal;
 
 public class DetalleVentaModel {
+
     private int id;
     private int ventaId;
     private int ticketId;
@@ -17,19 +18,19 @@ public class DetalleVentaModel {
     
     // todos
     public DetalleVentaModel(int id, int ventaId, int ticketId, BigDecimal precio, BigDecimal iva) {
-        this.id       = id;
-        this.ventaId  = ventaId;
+        this.id = id;
+        this.ventaId = ventaId;
         this.ticketId = ticketId;
-        this.precio   = precio;
-        this.iva      = iva;
+        this.precio = precio;
+        this.iva = iva;
     }
 
     // sin id, lo genera la bd
     public DetalleVentaModel(int ventaId, int ticketId, BigDecimal precio, BigDecimal iva) {
-        this.ventaId  = ventaId;
+        this.ventaId = ventaId;
         this.ticketId = ticketId;
-        this.precio   = precio;
-        this.iva      = iva;
+        this.precio = precio;
+        this.iva = iva;
     }
 
     public int getId() {

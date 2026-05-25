@@ -1,17 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-// MIGRACION: package cambiado de "dao" a "com.mundial.app.dao"
 package com.mundial.app.dao;
 
 import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 
-// MIGRACION: import ajustado de "connection.CreateConnection" a "com.mundial.app.connection.CreateConnection"
+
 import com.mundial.app.connection.CreateConnection;
-// MIGRACION: import ajustado de "model.ClienteModel" a "com.mundial.app.model.ClienteModel"
+
 import com.mundial.app.model.ClienteModel;
 
 public class ClienteDao {
@@ -64,14 +59,15 @@ public class ClienteDao {
         }
     }
 
-    // CAMBIAR ESTADO (borrado lógico) - usa sp_cliente_eliminar
-    public boolean cambiarEstado(int id) {
-        String sql = "SELECT sp_cliente_eliminar(?)";
+    // CAMBIAR ESTADO (borrado lógico) - usa sp_cliente_cambiar_estado
+    public boolean cambiarEstado(int id, boolean estado) {
+        String sql = "SELECT sp_cliente_cambiar_estado(?, ?)";
 
         try (Connection conn = CreateConnection.getInstancia().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
+            ps.setBoolean(2, estado);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getBoolean(1);
@@ -100,7 +96,8 @@ public class ClienteDao {
                     rs.getString("apellido"),
                     rs.getString("telefono"),
                     rs.getString("email"),
-                    rs.getString("direccion")
+                    rs.getString("direccion"),
+                    rs.getBoolean("estado")
                 );
                 lista.add(cm);
             }
@@ -129,7 +126,8 @@ public class ClienteDao {
                     rs.getString("apellido"),
                     rs.getString("telefono"),
                     rs.getString("email"),
-                    rs.getString("direccion")
+                    rs.getString("direccion"),
+                    rs.getBoolean("estado")
                 );
             }
 
@@ -158,7 +156,8 @@ public class ClienteDao {
                     rs.getString("apellido"),
                     rs.getString("telefono"),
                     rs.getString("email"),
-                    rs.getString("direccion")
+                    rs.getString("direccion"),
+                    rs.getBoolean("estado")
                 );
                 lista.add(cm);
             }

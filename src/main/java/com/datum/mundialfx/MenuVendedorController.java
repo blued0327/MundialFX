@@ -1,26 +1,22 @@
 package com.datum.mundialfx;
 
 import com.mundial.app.util.Sesion;
-
-import javafx.application.Platform;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class MenuVendedorController {
 
-public class MenuAdminController implements Initializable {
-
-    @FXML
     private Label lblBienvenida;
 
     @FXML
     private Label lblRol;
 
-    @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         if (Sesion.getUsuario() != null) {
@@ -61,23 +57,6 @@ public class MenuAdminController implements Initializable {
     @FXML
     private void irTicket() {
         System.out.println("Ir tickets");
-    }
-
-    // reportes
-    @FXML
-    private void irReporte() {
-        System.out.println("Ir reportes");
-    }
-
-    // usuarios
-    @FXML
-    private void irUsuario() {
-        //System.out.println("Ir usuarios");
-        try {
-            App.setRoot("Usuarios");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     // cerrar sesion

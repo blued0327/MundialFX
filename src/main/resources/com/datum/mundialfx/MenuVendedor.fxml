@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../../../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.datum.mundialfx.MenuAdminController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../../../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.datum.mundialfx.MenuVendedorController">
     <left>
         <VBox fillWidth="true" prefWidth="220.0" spacing="5.0" style="-fx-background-color: #08164B; -fx-padding: 20;" BorderPane.alignment="TOP_CENTER">
             <children>
@@ -43,16 +43,6 @@
                     </font>
                 </Button>
                 <Button fx:id="btnTicket" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irTicket" styleClass="menu-boton" text="Tickets" textFill="#f5f5f5">
-                    <font>
-                        <Font name="System Bold" size="12.0" />
-                    </font>
-                </Button>
-                <Button fx:id="btnReporte" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irReporte" styleClass="menu-boton" text="Reportes" textFill="#f5f5f5">
-                    <font>
-                        <Font name="System Bold" size="12.0" />
-                    </font>
-                </Button>
-                <Button fx:id="btnUsuario" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irUsuario" styleClass="menu-boton" text="Usuarios" textFill="#f5f5f5">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
