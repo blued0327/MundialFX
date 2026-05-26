@@ -25,7 +25,7 @@
             <Button mnemonicParsing="false" onAction="#volverMenu" prefHeight="33.0" prefWidth="103.0" styleClass="menu-boton-volver" text="← Volver" />
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Images/logo.png" />
+                  <Image url="@../../../../../../../../Downloads/goal_451772.png" />
                </image>
             </ImageView>
             <Label prefHeight="30.0" prefWidth="241.0" style="-fx-text-fill: #08164B; -fx-font-weight: bold; -fx-font-size: 20;" text="Gestión de Partidos" />
@@ -71,7 +71,7 @@
             <HBox spacing="6.0">
                <children>
                   <ComboBox fx:id="cmbHora" prefWidth="120.0" promptText="HH" />
-                  <Label text=":" style="-fx-font-weight: bold; -fx-font-size: 16;" />
+                  <Label style="-fx-font-weight: bold; -fx-font-size: 16;" text=":" />
                   <ComboBox fx:id="cmbMinuto" prefWidth="120.0" promptText="MM" />
                </children>
             </HBox>
