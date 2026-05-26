@@ -19,9 +19,11 @@ public class UsuarioModel {
 
     //insertar
     public UsuarioModel(String username, String password, String rol) {
+        //id se coloca por dafault en la db
         this.username = username;
         this.password = password;
         this.rol = rol;
+        //el procedure coloca el estado automaticamente como TRUE
     }
 
     //actulizar

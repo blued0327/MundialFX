@@ -29,11 +29,13 @@ public class ClienteModel {
     // sin id para registrar nuevo
     public ClienteModel(String nombre, String apellido, String telefono,
             String email, String direccion) {
+        //id es colocado en sql ded forma automatica en la creacion de un cliente
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
         this.email = email;
         this.direccion = direccion;
+        // estado es colocado en sql de fomra automatica tambien
     }
 
     public int getId() {

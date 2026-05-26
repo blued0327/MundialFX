@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LogDao {
 
-    //registrar un log (LOGIN, LOGOUT, LOGIN_FALLIDO)
+    //registrar un log LOGIN, LOGOUT, LOGIN_FALLIDO
     public int registrar(Integer usuarioId, String accion, String ip) {
         String query = "SELECT sp_log_usuario_registrar(?, ?, ?)";
         try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
