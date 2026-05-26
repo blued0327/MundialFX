@@ -1,4 +1,3 @@
-// MIGRACION: package cambiado de "model" a "com.mundial.app.model"
 package com.mundial.app.model;
 
 public class ClienteModel {
@@ -9,6 +8,7 @@ public class ClienteModel {
     private String telefono;
     private String email;
     private String direccion;
+    private boolean estado;
 
     // vacio
     public ClienteModel() {
@@ -16,13 +16,14 @@ public class ClienteModel {
 
     // todos
     public ClienteModel(int id, String nombre, String apellido, String telefono,
-            String email, String direccion) {
+            String email, String direccion, boolean estado) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
         this.email = email;
         this.direccion = direccion;
+        this.estado = estado;
     }
 
     // sin id para registrar nuevo
@@ -81,6 +82,14 @@ public class ClienteModel {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     // para que se vea bien en jcombobox

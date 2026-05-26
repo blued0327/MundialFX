@@ -1,13 +1,11 @@
 package com.datum.mundialfx;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 //
@@ -15,6 +13,8 @@ import com.mundial.app.controller.UsuarioController;
 import com.mundial.app.model.UsuarioModel;
 import com.mundial.app.util.Sesion;
 import javafx.scene.control.Alert;
+
+import com.mundial.app.util.IpUtil;
 
 /**
  * FXML Controller class
@@ -37,7 +37,22 @@ public class LoginController {
 
     @FXML
 
+    //abrir menu
+    private void abrirMenu() {
+        try {
+            if (Sesion.esAdmin()) {
+                App.setRoot("MenuAdmin"); //appp es el cambia la vista
+            } else {
+                App.setRoot("MenuVendedor");
+            }
+        } catch (Exception e) {
+            lblError.setText("Error al abrir el Menu");
+            e.printStackTrace();
+        }
+    }
+
     //ingresar
+    @FXML // QUE NO SE ME OLVIDE PONERLE ESTO
     private void ingresar() {
         //sirve para limpiar
         lblError.setText("");
@@ -63,9 +78,11 @@ public class LoginController {
             return;
         }
 
-        //parte donde si encuentra --primero recibe los datos el model
-        UsuarioModel usuario = controller.login(user, password);
+        //parte donde si encuentra --primero recibe los datos el model ------- aqui se a;ade la ip 
+        UsuarioModel usuario = controller.login(user, password, IpUtil.obtenerIp());
 
+  
+  
         if (usuario != null) {
             if (!usuario.isEstado()) {
                 //verifica que el usuario esta en false o true
@@ -74,8 +91,9 @@ public class LoginController {
             }
             //aqui se guarda en el metodo iniciar de la clase session y asi esta en todo el programa globalmente
             Sesion.iniciar(usuario);                    //aqui traera admin o user de la db osea que soy
-           mostrarMensaje("Bienvenido,  " + usuario.getUsername() + "!");
+            mostrarMensaje("Bienvenido,  " + usuario.getUsername() + "!");
             //menu principal
+            abrirMenu();
 
         } else {
             lblError.setText("Usuario o contraseña incorrectos");
@@ -99,15 +117,16 @@ public class LoginController {
             }
         });
     }
-    
+
     //mensaje exitoso
-    private void mostrarMensaje(String mensaje){
+    @FXML
+    private void mostrarMensaje(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Acceso exitoso");
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait(); //abre un pop-up creo que asi se escribe xD
-                
+
     }
 
 }

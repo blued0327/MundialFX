@@ -1,22 +1,12 @@
-// MIGRACION: package agregado (en el origen estaba comentado como //package model;)
 package com.mundial.app.model;
 
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-
-
-
-//package model;
-
-//import java.math.BigDecimal;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
-
 public class VentasModel {
-/*
+
     private int id;
     private LocalDateTime fecha;
     private int clienteId;
@@ -26,30 +16,83 @@ public class VentasModel {
     private BigDecimal totalIva;
     private BigDecimal total;
     private boolean anulada;
+    private String numeroFactura;
 
-    //para mostrar en pantalla con joins
+    // IDs de tickets comprados (para registrar la venta)
+    private List<Integer> ticketIds;
     private String clienteNombre;
-    private String usuarioUsername;
-    private List<DetalleVentaModel> detalles = new ArrayList<>();
+    private String vendedor;
 
-    //vacio
-    public VentasModel() {}
-
-    //todos
-    public VentasModel(int id, LocalDateTime fecha, int clienteId, int usuarioId,
-                       BigDecimal subtotal, BigDecimal descuento, BigDecimal totalIva,
-                       BigDecimal total, boolean anulada) {
-        this.id        = id;
-        this.fecha     = fecha;
-        this.clienteId = clienteId;
-        this.usuarioId = usuarioId;
-        this.subtotal  = subtotal;
-        this.descuento = descuento;
-        this.totalIva  = totalIva;
-        this.total     = total;
-        this.anulada   = anulada;
+    public VentasModel(String clienteNombre, String vendedor) {
+        this.clienteNombre = clienteNombre;
+        this.vendedor = vendedor;
     }
 
+    // constructor para registrar una venta nueva
+    public VentasModel(int clienteId, int usuarioId, BigDecimal subtotal, BigDecimal descuento, BigDecimal totalIva, BigDecimal total, List<Integer> ticketIds) {
+        // id lo genera sql con SERIAL
+        // fecha lo genera sql con DEFAULT CURRENT_TIMESTAMP
+        // anulada arranca siempre en FALSE por defecto
+        // numeroFactura lo genera el SP con la secuencia seq_factura
+        this.clienteId = clienteId;
+        this.usuarioId = usuarioId;
+        this.subtotal = subtotal;
+        this.descuento = descuento;
+        this.totalIva = totalIva;
+        this.total = total;
+        this.ticketIds = ticketIds;
+    }
+
+    // Para consultar una venta existente
+    public VentasModel(int id, LocalDateTime fecha, int clienteId, int usuarioId, BigDecimal subtotal, BigDecimal descuento, BigDecimal totalIva, BigDecimal total, boolean anulada, String numeroFactura, List<Integer> ticketIds) {
+        this.id = id;
+        this.fecha = fecha;
+        this.clienteId = clienteId;
+        this.usuarioId = usuarioId;
+        this.subtotal = subtotal;
+        this.descuento = descuento;
+        this.totalIva = totalIva;
+        this.total = total;
+        this.anulada = anulada;
+        this.numeroFactura = numeroFactura;
+        this.ticketIds = ticketIds;
+    }
+
+    //contructor vacio
+    public VentasModel() {
+    }
+
+    public VentasModel(int id, LocalDateTime fecha, int clienteId, int usuarioId, BigDecimal subtotal, BigDecimal descuento, BigDecimal totalIva, BigDecimal total, boolean anulada, String numeroFactura, List<Integer> ticketIds, String clienteNombre, String vendedor) {
+        this.id = id;
+        this.fecha = fecha;
+        this.clienteId = clienteId;
+        this.usuarioId = usuarioId;
+        this.subtotal = subtotal;
+        this.descuento = descuento;
+        this.totalIva = totalIva;
+        this.total = total;
+        this.anulada = anulada;
+        this.numeroFactura = numeroFactura;
+        this.ticketIds = ticketIds;
+        this.clienteNombre = clienteNombre;
+        this.vendedor = vendedor;
+    }
+
+    public String getClienteNombre() {
+        return clienteNombre;
+    }
+
+    public void setClienteNombre(String clienteNombre) {
+        this.clienteNombre = clienteNombre;
+    }
+
+    public String getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(String vendedor) {
+        this.vendedor = vendedor;
+    }
 
     public int getId() {
         return id;
@@ -123,137 +166,25 @@ public class VentasModel {
         this.anulada = anulada;
     }
 
-    public String getClienteNombre() {
-        return clienteNombre;
+    public String getNumeroFactura() {
+        return numeroFactura;
     }
 
-    public void setClienteNombre(String clienteNombre) {
-        this.clienteNombre = clienteNombre;
+    public void setNumeroFactura(String numeroFactura) {
+        this.numeroFactura = numeroFactura;
     }
 
-    public String getUsuarioUsername() {
-        return usuarioUsername;
+    public List<Integer> getTicketIds() {
+        return ticketIds;
     }
 
-    public void setUsuarioUsername(String usuarioUsername) {
-        this.usuarioUsername = usuarioUsername;
+    public void setTicketIds(List<Integer> ticketIds) {
+        this.ticketIds = ticketIds;
     }
 
-    public List<DetalleVentaModel> getDetalles() {
-        return detalles;
+    @Override
+    public String toString() {
+        return "Factura " + numeroFactura + " - Total: Q" + total + (anulada ? " [ANULADA]" : "");
     }
-
-    public void setDetalles(List<DetalleVentaModel> detalles) {
-        this.detalles = detalles;
-    }
-
-
-
-     private int id;
-    private LocalDate fechaCompra;
-    private ClienteModel cliente;  //Informació+ón de la tabla de Ronald
-    private UsuarioModel usuarioVenta;  //Información de la tabla de marín
-    private PartidoModel partido;  // Información de la tabla de luispe
-    private ArrayList<Boletos> ticketsComprados; // Información de la tabla de boletos(Ronald tambien)
-    private double subtotal;
-    private double iva;
-    private double descuento;
-    private double total;
-
-    //Constructor con parámetros
-    public VentasModel(int id, LocalDate fechaCompra, ClienteModel cliente, UsuarioModel usuarioVenta, PartidoModel partido, ArrayList<Boletos> ticketsComprados, double subtotal, double iva, double descuento, double total) {
-        this.id = id;
-        this.fechaCompra = fechaCompra;
-        this.cliente = cliente;
-        this.usuarioVenta = usuarioVenta;
-        this.partido = partido;
-        this.ticketsComprados = ticketsComprados;
-        this.subtotal = subtotal;
-        this.iva = iva;
-        this.descuento = descuento;
-        this.total = total;
-    }
-
-    //Metodos GET Y SET
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public LocalDate getFechaCompra() {
-        return fechaCompra;
-    }
-
-    public void setFechaCompra(LocalDate fechaCompra) {
-        this.fechaCompra = fechaCompra;
-    }
-
-    public ClienteModel getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(ClienteModel cliente) {
-        this.cliente = cliente;
-    }
-
-    public UsuarioModel getUsuarioVenta() {
-        return usuarioVenta;
-    }
-
-    public void setUsuarioVenta(UsuarioModel usuarioVenta) {
-        this.usuarioVenta = usuarioVenta;
-    }
-
-    public PartidoModel getPartido() {
-        return partido;
-    }
-
-    public void setPartido(PartidoModel partido) {
-        this.partido = partido;
-    }
-
-    public ArrayList<Boletos> getTicketsComprados() {
-        return ticketsComprados;
-    }
-
-    public void setTicketsComprados(ArrayList<Boletos> ticketsComprados) {
-        this.ticketsComprados = ticketsComprados;
-    }
-
-    public double getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(double subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public double getIva() {
-        return iva;
-    }
-
-    public void setIva(double iva) {
-        this.iva = iva;
-    }
-
-    public double getDescuento() {
-        return descuento;
-    }
-
-    public void setDescuento(double descuento) {
-        this.descuento = descuento;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-*/
 
 }
