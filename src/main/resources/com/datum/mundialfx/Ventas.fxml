@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -22,10 +23,14 @@
             <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <Button mnemonicParsing="false" onAction="#volverMenu" prefHeight="33.0" prefWidth="103.0" styleClass="menu-boton-volver" text="← Volver" />
+            <Button mnemonicParsing="false" onAction="#volverMenu" prefHeight="33.0" prefWidth="103.0" text="Volver">
+               <styleClass>
+                  <String fx:value="menu-boton-volver" />
+                  <String fx:value="boton-editar" />
+               </styleClass></Button>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Images/logo.png" />
+                  <Image url="@../../../Images/upselling_18578836.png" />
                </image>
             </ImageView>
             <Label style="-fx-text-fill: #08164B; -fx-font-weight: bold; -fx-font-size: 20;" text="Gestión de Ventas" />

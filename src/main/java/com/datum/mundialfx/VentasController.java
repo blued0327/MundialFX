@@ -183,52 +183,52 @@ public class VentasController implements Initializable {
     private ClienteModel clienteActual;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) { //meotodo de javafx para iniciar la pantalla
 
         //tabla ventas
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("id")); //sele dice a cada columna que dato del modelo tienen que jalar
         colFactura.setCellValueFactory(new PropertyValueFactory<>("numeroFactura"));
         colCliente.setCellValueFactory(new PropertyValueFactory<>("clienteNombre"));
         colVendedor.setCellValueFactory(new PropertyValueFactory<>("vendedor"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
 
         //formatear fecha
-        colFecha.setCellValueFactory(cell -> {
+        colFecha.setCellValueFactory(cell -> { // le decimos a la columna que vamos a usar un metodo personalizado para setearle
 
-            if (cell.getValue().getFecha() == null) {
-                return new SimpleStringProperty("");
+            if (cell.getValue().getFecha() == null) { // si etra a la fecha y consiga la fecha y es nullo devuelve un texto vacio
+                return new SimpleStringProperty(""); 
             }
 
             return new SimpleStringProperty(
-                    cell.getValue().getFecha().format(formatoFecha)
+                    cell.getValue().getFecha().format(formatoFecha) //sino obtendra el valor y el formato puesto aqui arribita
             );
         });
 
         //estado activa o anulada
         colEstado.setCellValueFactory(cell -> {
 
-            String estado = cell.getValue().isAnulada()
-                    ? "ANULADA" : "ACTIVA";
+            String estado = cell.getValue().isAnulada()//validacion para la columna estado 
+                    ? "ANULADA" : "ACTIVA";  //si trae true es que se anulo y false si esta activa 
 
-            return new SimpleStringProperty(estado);
+            return new SimpleStringProperty(estado);//impleStringProperty que JavaFX exige para poder renderizar y pintar el texto en la tabla.
         });
 
         //colores del estado
-        colEstado.setCellFactory(col -> new TableCell<>() {
+        colEstado.setCellFactory(col -> new TableCell<>() {//le dice a java fx que cree un objeto "tablecell" para poder cambiar el visual
 
             @Override
             protected void updateItem(String estado, boolean empty) {
 
-                super.updateItem(estado, empty);
+                super.updateItem(estado, empty);//recibe el estado true o false, o si esta vacia
 
-                if (empty || estado == null) {
+                if (empty || estado == null) { // si esta vacio no setea nada
 
                     setText(null);
                     setStyle("");
 
                 } else {
 
-                    setText(estado);
+                    setText(estado);//sinio le setee estos colres
 
                     switch (estado) {
 
@@ -241,6 +241,8 @@ public class VentasController implements Initializable {
                 }
             }
         });
+        
+        //asignar las demas columnasque van a jalar
 
         //detalle recibo
         colPartido.setCellValueFactory(new PropertyValueFactory<>("partido"));
@@ -260,30 +262,38 @@ public class VentasController implements Initializable {
         colCarrSeccion.setCellValueFactory(new PropertyValueFactory<>("seccion"));
         colCarrPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
 
-        //crear botones
+        //crear botones// lamma a los 3 metodos 
         configurarBotonAgregar();
         configurarBotonQuitar();
         configurarAcciones();
 
-        //llenar combo partidos
+        //llenar combo partidos/// con listar disponibles del controller
         cmbPartido.setItems(
                 FXCollections.observableArrayList(
                         partidoController.listarDisponibles()
                 )
         );
-
+        
+        
+        //este listenner mejor lo voy a cometar todo
+        /*
+        Cuando el vendedor cambia de partido en el ComboBox, el sistema activa un escuchador que primero revisa si había boletos guardados del partido anterior; si encuentra algo,
+        vacía el carrito por completo y llama a actualizarResumen() para que borre el dinero acumulado y ponga la pantalla en Q0.00 (evitando que se mezclen juegos distintos); inmediatamente después, reinicia el filtro de asientos a
+        "Todas" y manda a traer desde la base de datos de PostgreSQL las localidades disponibles del nuevo partido seleccionado para cargarlas en la tabla.
+        */
         //cuando cambia partido
-        cmbPartido.valueProperty().addListener((obs, oldVal, newVal) -> {
+        cmbPartido.valueProperty().addListener((obs, oldVal, newVal) -> {//si nuevo valor es diferente a null y si viejo valor es diferente
+                                                                    //y si viejo es igual a nuevo t carrito no esta vacio
 
             if (newVal != null) {
 
                 //si cambio de partido y habia tickets en el carrito los borramos
                 //para no mezclar tickets de distintos partidos en la misma venta
                 if (oldVal != null && !oldVal.equals(newVal) && !carrito.isEmpty()) {
-                    TicketsUtil.limpiar();
-                    carrito.clear();
+                    TicketsUtil.limpiar();       //limpia la lista funcion de tickets util
+                    carrito.clear();                
                     tablaCarrito.setItems(carrito);
-                    actualizarResumen();
+                    actualizarResumen();//en este caso como ponemos todo en blanco limpia y pone todo en Q0.00, sino ejecutaria la otra perte de actualizar resumene
                 }
 
                 //reseteamos el filtro a Todas para que el vendedor vea de entrada lo que hay
@@ -296,14 +306,14 @@ public class VentasController implements Initializable {
         //buscar factura automatico
         txtBuscarFactura.textProperty().addListener((obs, oldVal, newVal) -> {
 
-            buscarFactura(newVal);
+            buscarFactura(newVal); //cualquier dato que se meta lo manda a buscar factura
         });
 
         //seleccionar venta
         tablaVentas.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, venta) -> {
 
             if (venta != null) {
-
+                //Este bloque detecta a qué factura le da clic el usuario en la tabla principal y carga al instante sus asientos comprados en la tabla de detalles
                 cargarDetalle(venta.getId());
             }
         });

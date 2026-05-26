@@ -16,7 +16,7 @@ public class VentasDao {
     public static final double DESCUENTO_5 = 0.05;
     public static final double DESCUENTO_7 = 0.07;
 
-    public int registrarVenta(VentasModel venta) throws SQLException {
+    public int registrarVenta(VentasModel venta) throws SQLException { //sirve para avisar que vamos atrabajar con SQL y puede que hayn errores
         String sql = "SELECT sp_venta_registrar(?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -24,8 +24,8 @@ public class VentasDao {
             ps.setInt(1, venta.getClienteId());
             ps.setInt(2, venta.getUsuarioId());
 
-            //convertimos la lista de ids a un array que entiende postgresql
-            Integer[] ids = venta.getTicketIds().toArray(new Integer[0]);
+            //convertimos la lista de ids a un array que entiende postgresql ya que postgress tiene un array propio no una list 
+            Integer[] ids = venta.getTicketIds().toArray(new Integer[0]); 
             Array pgArray = conn.createArrayOf("integer", ids);
             ps.setArray(3, pgArray);
 
@@ -33,16 +33,18 @@ public class VentasDao {
             ps.setBigDecimal(5, venta.getDescuento());
             ps.setBigDecimal(6, venta.getTotalIva());
             ps.setBigDecimal(7, venta.getTotal());
-
+            
+            
+            //aqui atrapamos el v_venta_id de la db     
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    int ventaId = rs.getInt(1);
-                    venta.setId(ventaId);
+                    int ventaId = rs.getInt(1); //si es exitoso  trae el id 
+                    venta.setId(ventaId);   // lo seteamos en venta model y retornamos 
                     return ventaId;
                 }
             }
         }
-        return -1;
+        return -1; // si se salta el if llega a -1 dandonos a entender que no se incerto naday no devolvio el id
     }
 
     public boolean anularVenta(int ventaId, int usuarioId, String motivo) throws SQLException {

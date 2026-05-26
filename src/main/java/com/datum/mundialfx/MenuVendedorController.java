@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -12,15 +13,22 @@ import javafx.scene.control.Label;
 import com.mundial.app.controller.UsuarioController;
 import com.mundial.app.util.IpUtil;
 
-public class MenuVendedorController {
+//implementamos Initializable para que JavaFX llame solito al initialize()
+//antes sin esto el metodo initialize() existia pero nadie lo invocaba
+//entonces los labels nunca se rellenaban (rol y bienvenida salian vacios)
+public class MenuVendedorController implements Initializable {
 
     private static UsuarioController controller = new UsuarioController();
 
+    //le faltaba el @FXML para que JavaFX inyectara el label desde el FXML
+    //sin esto lblBienvenida siempre era null y al hacer setText tronaba en silencio
+    @FXML
     private Label lblBienvenida;
 
     @FXML
     private Label lblRol;
 
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         if (Sesion.getUsuario() != null) {

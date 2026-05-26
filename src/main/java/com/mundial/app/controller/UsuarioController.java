@@ -30,6 +30,21 @@ public class UsuarioController {
         return dao.insertar(user) > 0;
     }
 
+    //insertar con estado
+    //sobrecarga para respetar lo que diga el checkbox del formulario
+    //antes el insert siempre quedaba inactivo porque el constructor de 3 args
+    //no setea estado y por default un boolean en java arranca en false
+    public boolean insertarUsuario(String username, String password, String rol, boolean estado) {
+
+        //hashear la password con bcrypt antes de mandarla a la BD
+        String hash = PasswordUtil.hashear(password);
+
+        //usamos el constructor de 4 args que si setea el estado
+        UsuarioModel user = new UsuarioModel(username, hash, rol, estado);
+
+        return dao.insertar(user) > 0;
+    }
+
     //actualizar
     /*
     public boolean actualizarUsuario(int id, String username, String password, String rol, boolean estado) {

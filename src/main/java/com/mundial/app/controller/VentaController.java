@@ -83,7 +83,7 @@ public class VentaController {
             return new ArrayList<>();
         }
     }
-
+    // esta se hizo para darle una conexion a JasperReports osea a nuestros reportes 
    public Connection getConexion() {
     return CreateConnection.getInstancia().getConnection();
 }
