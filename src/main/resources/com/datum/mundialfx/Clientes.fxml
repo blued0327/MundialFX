@@ -24,7 +24,7 @@
                 <Button mnemonicParsing="false" onAction="#volverMenu" styleClass="boton-editar" text=" Volver" />
                 <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../Images/logo.png" />
+                        <Image url="@../../../../../../../../Downloads/target_1605401.png" />
                     </image>
                 </ImageView>
                 <Label style="-fx-text-fill: #08164B; -fx-font-weight: bold; -fx-font-size: 20;" text="Gestión de Clientes" />
