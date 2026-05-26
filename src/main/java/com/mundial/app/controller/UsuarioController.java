@@ -31,10 +31,47 @@ public class UsuarioController {
     }
 
     //actualizar
+    /*
     public boolean actualizarUsuario(int id, String username, String password, String rol, boolean estado) {
         String hash = PasswordUtil.hashear(password);
         UsuarioModel user = new UsuarioModel(username, hash, rol, estado);
         user.setId(id);
+        return dao.actualizar(user);
+    }*/
+    //actualizar
+    public boolean actualizarUsuario(int id, String username, String password, String rol, boolean estado) {
+
+        //si password viene vacia
+        //significa que no quiere cambiarla
+        if (password == null || password.isBlank()) {
+
+            //buscar usuario actual
+            UsuarioModel actual = dao.buscarPorId(id);
+
+            //si no existe retornar false
+            if (actual == null) {
+                return false;
+            }
+
+            //usar password vieja(hasheada)
+            password = actual.getPassword();
+
+        } else {
+
+            //si escribio nueva password
+            //entonces encriptar
+            password = PasswordUtil.hashear(password);
+        }
+
+        UsuarioModel user = new UsuarioModel(
+                username,
+                password,
+                rol,
+                estado
+        );
+
+        user.setId(id);
+
         return dao.actualizar(user);
     }
 
@@ -56,24 +93,17 @@ public class UsuarioController {
         UsuarioModel usuario = dao.buscarPorUsername(username);
 
         //si existe y la password coincide entra
-        if (usuario != null
-                && PasswordUtil.verificar(password, usuario.getPassword())) {
+        if (usuario != null && PasswordUtil.verificar(password, usuario.getPassword())) {
 
             //registrar login correcto
-            logDao.registrar(
-                    usuario.getId(),
-                    "LOGIN",
-                    ip
+            logDao.registrar(usuario.getId(), "LOGIN", ip
             );
 
             return usuario;
         }
 
         //si falla el login guardamos intento fallido
-        logDao.registrar(
-                null,
-                "LOGIN_FALLIDO",
-                ip
+        logDao.registrar(null, "LOGIN_FALLIDO", ip
         );
 
         return null;
@@ -83,10 +113,7 @@ public class UsuarioController {
     public void logout(int usuarioId, String ip) {
 
         //guardar salida del sistema
-        logDao.registrar(
-                usuarioId,
-                "LOGOUT",
-                ip
+        logDao.registrar(usuarioId, "LOGOUT", ip
         );
     }
 }

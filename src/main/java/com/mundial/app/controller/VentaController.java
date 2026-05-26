@@ -7,15 +7,17 @@ package com.mundial.app.controller;
 import com.mundial.app.dao.VentasDao;
 import com.mundial.app.model.VentasModel;
 import com.mundial.app.model.ReciboModel;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import com.mundial.app.connection.CreateConnection;
 
 /**
  *
  * @author rchar
  */
 public class VentaController {
-
+    
     private final VentasDao dao = new VentasDao();
 
     public VentasModel calcularTotales(int clienteId, int usuarioId,
@@ -81,4 +83,8 @@ public class VentaController {
             return new ArrayList<>();
         }
     }
+
+   public Connection getConexion() {
+    return CreateConnection.getInstancia().getConnection();
+}
 }

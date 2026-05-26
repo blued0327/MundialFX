@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 
-// MIGRACION: import ajustado de "connection.CreateConnection" a "com.mundial.app.connection.CreateConnection"
+
 import com.mundial.app.connection.CreateConnection;
-// MIGRACION: import ajustado de "model.UsuarioModel" a "com.mundial.app.model.UsuarioModel"
+
 import com.mundial.app.model.UsuarioModel;
 
 public class UsuarioDao {
@@ -108,23 +108,21 @@ public class UsuarioDao {
 
     }*/
     public boolean cambiarEstado(int id, boolean estado) {
-    String query = "SELECT sp_usuario_cambiar_estado(?, ?)";
-    try (Connection conn = CreateConnection.getInstancia().getConnection();
-         PreparedStatement ps = conn.prepareStatement(query)) {
+        String query = "SELECT sp_usuario_cambiar_estado(?, ?)";
+        try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
 
-        ps.setInt(1, id);
-        ps.setBoolean(2, estado);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return rs.getBoolean(1);
+            ps.setInt(1, id);
+            ps.setBoolean(2, estado);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getBoolean(1);
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
-        return false;
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
     }
-}
-    
 
     //buscar por username
     public UsuarioModel buscarPorUsername(String username) {
@@ -146,6 +144,41 @@ public class UsuarioDao {
             return null;
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    //buscar usuario por id
+    public UsuarioModel buscarPorId(int id) {
+
+        String query = "SELECT * FROM sp_usuario_por_id(?)";
+
+        try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+            //mandar id
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            //si encontro usuario
+            if (rs.next()) {
+
+                UsuarioModel user = new UsuarioModel();
+
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setRol(rs.getString("rol"));
+                user.setEstado(rs.getBoolean("estado"));
+
+                return user;
+            }
+
+            return null;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
             return null;
         }
     }

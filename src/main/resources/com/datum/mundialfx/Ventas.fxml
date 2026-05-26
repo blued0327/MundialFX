@@ -89,6 +89,12 @@
             <ComboBox fx:id="cmbPartido" maxWidth="1.7976931348623157E308" promptText="Seleccione un partido" />
 
             <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Tickets disponibles" />
+            <HBox spacing="8.0">
+               <children>
+                  <ComboBox fx:id="cmbFiltroSeccion" prefWidth="180.0" promptText="Filtrar por sección" />
+                  <Label fx:id="lblConteoSecciones" style="-fx-text-fill: #5a647d; -fx-font-size: 11; -fx-padding: 4 0 0 8;" text="" wrapText="true" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
             <TableView fx:id="tablaDisponibles" prefHeight="150.0">
                <columns>
                   <TableColumn fx:id="colDispAsiento" prefWidth="100.0" text="Asiento" />

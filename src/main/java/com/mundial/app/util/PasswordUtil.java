@@ -1,4 +1,4 @@
-// MIGRACION: package cambiado de "util" a "com.mundial.app.util"
+
 package com.mundial.app.util;
 
 import org.mindrot.jbcrypt.BCrypt;

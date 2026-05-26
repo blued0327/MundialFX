@@ -11,15 +11,13 @@ public class IpUtil {
         try {
 
             //obtiene la ip de la pc
-            return InetAddress
-                    .getLocalHost()
-                    .getHostAddress();
+            return InetAddress.getLocalHost().getHostAddress();
 
         } catch (Exception e) {
 
             e.printStackTrace();
 
-            return "Descopnocida";
+            return "Depsonocida";
         }
     }
 }

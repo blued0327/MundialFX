@@ -316,28 +316,24 @@ public class UsuariosController implements Initializable {
                     lblErrorForm.setText("No se pudo registrar. Verifique los datos.");
                 }
             } else {
-                // ACTUALIZAR 
-                //si deja password vacía se mantiene la anterior
-                if (password.isEmpty()) {
-                    // traemos el hash actual para no pisarlo
-                    UsuarioModel actual = controller.listarUsuarios()
-                            .stream()
-                            .filter(u -> u.getId() == idEditar)
-                            .findFirst()
-                            .orElse(null);
-                    if (actual == null) {
-                        lblErrorForm.setText("Usuario no encontrado.");
-                        return;
-                    }
-                    password = actual.getPassword(); // mantiene el hash existente
-                }
-                boolean ok = controller.actualizarUsuario(idEditar, username, password, rol, estado);
-                if (ok) {
-                    mostrarAlerta(Alert.AlertType.INFORMATION, "Usuario actualizado correctamente.");
+                // ACTUALIZAR
+                //si password viene vacia el controller busca el hash actual y lo conserva
+                //si viene llena el controller la encripta -- no tocar aqui esa logica
+                boolean confirmar = controller.actualizarUsuario(idEditar, username, password, rol, estado);
+
+                if (confirmar) {
+
+                    mostrarAlerta(
+                            Alert.AlertType.INFORMATION, "Usuario actualizado correctamente ");
+
                     cerrarFormulario();
                     cargarTabla();
+
                 } else {
-                    lblErrorForm.setText("No se pudo actualizar. Verifique los datos.");
+
+                    lblErrorForm.setText(
+                            "No se pudo actualizar. Verifique los datos "
+                    );
                 }
             }
         } catch (Exception e) {

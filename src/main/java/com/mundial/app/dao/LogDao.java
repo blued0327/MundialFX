@@ -1,4 +1,3 @@
-
 package com.mundial.app.dao;
 
 import com.mundial.app.connection.CreateConnection;
@@ -20,7 +19,7 @@ public class LogDao {
 
             //usuario_id puede ser null en LOGIN_FALLIDO
             if (usuarioId == null) {
-                ps.setNull(1, java.sql.Types.INTEGER);
+                ps.setNull(1, java.sql.Types.INTEGER);//este null es de tipo interger
             } else {
                 ps.setInt(1, usuarioId);
             }
@@ -38,7 +37,7 @@ public class LogDao {
         }
     }
 
-    //listar logs paginados (limit + offset)
+    //listar logs paginados limit + offset
     public List<LogModel> listar(int limit, int offset) {
         List<LogModel> lista = new ArrayList<>();
         String query = "SELECT * FROM sp_log_listar(?, ?)";
@@ -51,27 +50,54 @@ public class LogDao {
 
             while (rs.next()) {
                 LogModel log = new LogModel();
+                //guardar id del log
                 log.setId(rs.getInt("id"));
 
                 //usuario_id puede venir null
+                //esto pasa por ejemplo en LOGIN_FALLIDO
                 int uid = rs.getInt("usuario_id");
-                log.setUsuarioId(rs.wasNull() ? null : uid);
 
-                log.setUsername(rs.getString("username"));
+                //si venia null guardar null
+                //si no guardar el id normal
+                log.setUsuarioId(
+                        rs.wasNull() ? null : uid
+                );
 
+                //guardar username
+                log.setUsername(
+                        rs.getString("username")
+                );
+
+                //obtener fecha timestamp de sql
                 Timestamp fecha = rs.getTimestamp("fecha");
+
+                //si fecha existe convertirla a LocalDateTime
                 if (fecha != null) {
-                    log.setFecha(fecha.toLocalDateTime());
+
+                    log.setFecha(
+                            fecha.toLocalDateTime()
+                    );
                 }
 
-                log.setAccion(rs.getString("accion"));
-                log.setIp(rs.getString("ip"));
+                //guardar accion realizada
+                //ejemplo LOGIN LOGOUT etc
+                log.setAccion(
+                        rs.getString("accion")
+                );
 
+                //guardar ip desde donde se hizo la accion
+                log.setIp(
+                        rs.getString("ip")
+                );
+
+                //agregar log a la lista final
                 lista.add(log);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return lista;
     }
 

@@ -235,6 +235,23 @@ public class TicketController implements Initializable {
                 return;
             }
 
+            //si una seccion tiene cantidad debe tener precio valido
+            if (cantVip > 0 && precioVip <= 0) {
+                lblErrorForm.setText("El precio VIP debe ser mayor a 0.");
+                txtPrecioVip.requestFocus();
+                return;
+            }
+            if (cantPref > 0 && precioPref <= 0) {
+                lblErrorForm.setText("El precio Preferencial debe ser mayor a 0.");
+                txtPrecioPref.requestFocus();
+                return;
+            }
+            if (cantGen > 0 && precioGen <= 0) {
+                lblErrorForm.setText("El precio General debe ser mayor a 0.");
+                txtPrecioGen.requestFocus();
+                return;
+            }
+
             //verificar que no se pase de la capacidad del estadio
             int totalGenerar = cantVip + cantPref + cantGen;
             if (totalGenerar > partido.getCapacidad()) {
