@@ -27,27 +27,41 @@
                         <Insets bottom="20.0" top="10.0" />
                     </padding>
                 </Label>
-                <Button fx:id="btnVentas" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irVentas" styleClass="menu-boton" text="Ventas" textFill="#f5f5f5">
-                    <font>
-                        <Font name="System Bold" size="12.0" />
-                    </font>
-               <graphic>
-                  <ImageView fitHeight="36.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../Images/logo.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-                </Button>
+               <Button fx:id="btnVentas" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irVentas" styleClass="menu-boton" text="Ventas" textFill="#f5f5f5">
+    <font>
+        <Font name="System Bold" size="12.0" />
+    </font>
+    <graphic>
+        <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../Images/ChatGPT%20Image%2025%20may%202026,%2014_10_30.png" />
+            </image>
+        </ImageView>
+    </graphic>
+</Button>
                 <Button fx:id="btnCliente" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irCliente" styleClass="menu-boton" text="Clientes" textFill="#f5f5f5">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
+               <graphic>
+                  <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/Clientes.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
                 </Button>
                 <Button fx:id="btnPartido" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irPartido" styleClass="menu-boton" text="Partidos" textFill="#f5f5f5">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
+               <graphic>
+                  <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/Estadio.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
                 </Button>
                 <Button fx:id="btnTicket" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irTicket" styleClass="menu-boton" text="Tickets" textFill="#f5f5f5">
                     <font>
