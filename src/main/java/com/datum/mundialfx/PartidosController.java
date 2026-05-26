@@ -241,6 +241,23 @@ public class PartidosController implements Initializable {
         lista.clear();
         List<PartidoModel> datos = controller.listarPartidos();
 
+        //si un partido sigue como DISPONIBLE pero la fecha ya paso
+        //automaticamente lo pasamos a FINALIZADO para que no se vea raro
+        //esto se hace antes de mostrar nada
+        LocalDateTime ahora = LocalDateTime.now();
+        for (PartidoModel p : datos) {
+            if ("DISPONIBLE".equals(p.getEstado())
+                    && p.getFecha() != null
+                    && p.getFecha().isBefore(ahora)) {
+
+                //actualizamos en la BD y el estado del modelo en memoria
+                boolean ok = controller.cambiarEstado(p.getId(), "FINALIZADO");
+                if (ok) {
+                    p.setEstado("FINALIZADO");
+                }
+            }
+        }
+
         //si es vendedor solo muestra los disponibles
         if (!Sesion.esAdmin()) {
             datos.removeIf(p -> !"DISPONIBLE".equals(p.getEstado()));
@@ -386,8 +403,13 @@ public class PartidosController implements Initializable {
 
         try {
             if (idEditar == -1) {
-                //insertar siempre como disponible
-                boolean confirm = controller.insertarPartido(local, visitante, fechaCompleta, estadio, ciudad, capacidad, "DISPONIBLE");
+                //si la fecha que pone el admin ya paso lo metemos directo como FINALIZADO
+                //sino arranca como DISPONIBLE normal
+                String estadoNuevo = fechaCompleta.isBefore(LocalDateTime.now())
+                        ? "FINALIZADO" : "DISPONIBLE";
+
+                //insertar con el estado que toque
+                boolean confirm = controller.insertarPartido(local, visitante, fechaCompleta, estadio, ciudad, capacidad, estadoNuevo);
                 if (confirm) {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Partido registrado correctamente.");
                     cerrarFormulario();
@@ -400,7 +422,14 @@ public class PartidosController implements Initializable {
                 PartidoModel actual = controller.buscarPorId(idEditar);
                 String estadoActual = (actual != null) ? actual.getEstado() : "DISPONIBLE";
 
-                //true si se gizo 
+                //si la fecha nueva ya paso y el partido estaba DISPONIBLE
+                //lo pasamos a FINALIZADO directamente, no tiene sentido dejarlo abierto
+                if ("DISPONIBLE".equals(estadoActual)
+                        && fechaCompleta.isBefore(LocalDateTime.now())) {
+                    estadoActual = "FINALIZADO";
+                }
+
+                //true si se gizo
                 boolean confirm = controller.actualizarPartido(idEditar, local, visitante, fechaCompleta, estadio, ciudad, capacidad, estadoActual);
                 if (confirm) {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Partido actualizado correctamente ");

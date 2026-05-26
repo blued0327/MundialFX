@@ -307,7 +307,9 @@ public class UsuariosController implements Initializable {
                 }
 
                 //nuestra variable agarra lo que arroje nuestro controlador true si lo resgistro o false sino
-                boolean correcto = controller.insertarUsuario(username, password, rol);
+                //ojo: ahora si le mandamos el estado del chkEstado para que respete el checkbox
+                //antes mandabamos solo 3 args y el usuario siempre quedaba como inactivo
+                boolean correcto = controller.insertarUsuario(username, password, rol, estado);
                 if (correcto) {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Usuario registrado correctamente.");
                     cerrarFormulario();

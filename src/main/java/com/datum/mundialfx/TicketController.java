@@ -252,10 +252,24 @@ public class TicketController implements Initializable {
                 return;
             }
 
+            //contamos cuantos tickets ya tiene este partido en la BD
+            //para no pasarnos de la capacidad sumando los que ya hay + los nuevos
+            int yaExisten = controller.consultarPorPartido(partido.getId()).size();
+
             //verificar que no se pase de la capacidad del estadio
             int totalGenerar = cantVip + cantPref + cantGen;
-            if (totalGenerar > partido.getCapacidad()) {
-                lblErrorForm.setText("El total supera la capacidad (" + partido.getCapacidad() + ").");
+            int totalDespues = yaExisten + totalGenerar;
+
+            if (totalDespues > partido.getCapacidad()) {
+
+                //le decimos cuanto puede generar aun para que no este adivinando
+                int disponiblesAun = partido.getCapacidad() - yaExisten;
+
+                lblErrorForm.setText(
+                        "El total (" + totalDespues + ") supera la capacidad ("
+                        + partido.getCapacidad() + "). Ya hay " + yaExisten
+                        + " tickets, solo puede generar " + disponiblesAun + " mas."
+                );
                 return;
             }
 
