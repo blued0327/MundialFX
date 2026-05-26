@@ -1,4 +1,3 @@
-// MIGRACION: package cambiado de "model" a "com.mundial.app.model"
 package com.mundial.app.model;
 
 import java.math.BigDecimal;
@@ -7,6 +6,7 @@ public class TicketModel {
 
     private int id;
     private int partidoId;
+    private String nombrePartido;
     private String numeroAsiento;
     private String seccion;
     private BigDecimal precio;
@@ -15,6 +15,26 @@ public class TicketModel {
     //para mostrar en pantalla con joins
     private String equipoLocal;
     private String equipoVisitante;
+
+    public String getNombrePartido() {
+        return nombrePartido;
+    }
+
+    public void setNombrePartido(String nombrePartido) {
+        this.nombrePartido = nombrePartido;
+    }
+
+    public TicketModel(int id, int partidoId, String nombrePartido, String numeroAsiento, String seccion, BigDecimal precio, String estado, String equipoLocal, String equipoVisitante) {
+        this.id = id;
+        this.partidoId = partidoId;
+        this.nombrePartido = nombrePartido;
+        this.numeroAsiento = numeroAsiento;
+        this.seccion = seccion;
+        this.precio = precio;
+        this.estado = estado;
+        this.equipoLocal = equipoLocal;
+        this.equipoVisitante = equipoVisitante;
+    }
 
     //vacio
     public TicketModel() {

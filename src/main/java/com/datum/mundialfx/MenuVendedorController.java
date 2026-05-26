@@ -33,6 +33,11 @@ public class MenuVendedorController {
     @FXML
     private void irVentas() {
         System.out.println("Ir ventas");
+           try {
+            App.setRoot("Ventas");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // clientes
@@ -61,6 +66,11 @@ public class MenuVendedorController {
     @FXML
     private void irTicket() {
         System.out.println("Ir tickets");
+        try {
+            App.setRoot("Tickets");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // cerrar sesion

@@ -34,7 +34,7 @@
                <graphic>
                   <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../Downloads/ChatGPT%20Image%2025%20may%202026,%2017_02_00.png" />
+                        <Image url="@../../../Images/Ventas.png" />
                      </image>
                   </ImageView>
                </graphic>

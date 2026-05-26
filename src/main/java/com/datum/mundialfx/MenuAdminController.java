@@ -66,6 +66,11 @@ public class MenuAdminController implements Initializable {
     @FXML
     private void irTicket() {
         System.out.println("Ir tickets");
+        try {
+            App.setRoot("Tickets");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // reportes
