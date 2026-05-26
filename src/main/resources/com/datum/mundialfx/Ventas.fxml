@@ -22,7 +22,7 @@
          </padding>
          <children>
             <Button mnemonicParsing="false" onAction="#volverMenu" prefHeight="33.0" prefWidth="103.0" styleClass="menu-boton-volver" text="← Volver" />
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="36.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../../../Downloads/upselling_18578836.png" />
                </image>

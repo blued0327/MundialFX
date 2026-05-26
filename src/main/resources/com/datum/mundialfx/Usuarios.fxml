@@ -24,9 +24,9 @@
             </padding>
             <children>
             <Button mnemonicParsing="false" onAction="#volverMenu" prefHeight="33.0" prefWidth="103.0" styleClass="boton-editar" text="Volver" />
-                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="37.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../Images/logo.png" />
+                        <Image url="@../../../../../../../../Downloads/customer_3126649.png" />
                     </image>
                 </ImageView>
                 <Label prefHeight="30.0" prefWidth="241.0" style="-fx-text-fill: #08164B; -fx-font-weight: bold; -fx-font-size: 20;" text="Gestión de Usuarios" />
