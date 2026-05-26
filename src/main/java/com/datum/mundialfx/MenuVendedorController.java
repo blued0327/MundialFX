@@ -33,7 +33,7 @@ public class MenuVendedorController {
     @FXML
     private void irVentas() {
         System.out.println("Ir ventas");
-           try {
+        try {
             App.setRoot("Ventas");
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,6 +70,35 @@ public class MenuVendedorController {
             App.setRoot("Tickets");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    //reportes -- abre la carpeta facturas del proyecto donde se guardan los reportes
+    @FXML
+    private void irReporte() {
+        try {
+
+            //ruta a la carpeta facturas dentro del proyecto MundialFX
+            //user.dir = directorio raiz desde donde se ejecuta la app
+            java.io.File carpeta = new java.io.File(
+                    System.getProperty("user.dir") + "/facturas"
+            );
+
+            //si no existe la creamos para que no tire error la primera vez
+            if (!carpeta.exists()) {
+                carpeta.mkdirs();
+            }
+
+            //abre el explorador de windows en esa carpeta
+            java.awt.Desktop.getDesktop().open(carpeta);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Reportes");
+            alert.setHeaderText(null);
+            alert.setContentText("No se pudo abrir la carpeta de reportes.");
+            alert.showAndWait();
         }
     }
 

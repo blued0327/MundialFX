@@ -6,7 +6,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -14,7 +13,8 @@
     <left>
         <VBox fillWidth="true" prefWidth="220.0" spacing="5.0" style="-fx-background-color: #08164B; -fx-padding: 20;" BorderPane.alignment="CENTER">
             <children>
-                <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+            <BorderPane prefHeight="200.0" prefWidth="200.0" />
+                <ImageView fitHeight="60.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../../Images/logo.png" />
                     </image>
@@ -27,26 +27,26 @@
                         <Insets bottom="20.0" top="10.0" />
                     </padding>
                 </Label>
-                <Button fx:id="btnVentas" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irVentas" styleClass="menu-boton" text="Ventas" textFill="#f5f5f5">
+                <Button fx:id="btnUsuario" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irUsuario" prefHeight="66.0" prefWidth="44.0" styleClass="menu-boton" text="Usuarios" textFill="#f5f5f5">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../Images/Ventas.png" />
+                        <Image url="@../../../Images/usuarios.png" />
                      </image>
                   </ImageView>
                </graphic>
                 </Button>
                 <Button fx:id="btnCliente" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irCliente" styleClass="menu-boton" text="Clientes" textFill="#f5f5f5">
                     <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="27.0" />
                     </font>
                <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../Downloads/imagenclientesImage_itq6citq6citq6ci.png" />
+                        <Image url="@../../../Images/Clientes.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -56,9 +56,9 @@
                         <Font name="System Bold" size="12.0" />
                     </font>
                <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../Downloads/ChatGPT%20Image%2025%20may%202026,%2016_56_17.png" />
+                        <Image url="@../../../Images/Partido.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -67,24 +67,50 @@
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/ticket.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+                </Button>
+                <Button fx:id="btnVentas" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irVentas" styleClass="menu-boton" text="Ventas" textFill="#f5f5f5">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/Ventas.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
                 </Button>
                 <Button fx:id="btnReporte" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irReporte" styleClass="menu-boton" text="Reportes" textFill="#f5f5f5">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/curriculum-vitae_16416418.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
                 </Button>
-                <Button fx:id="btnUsuario" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irUsuario" styleClass="menu-boton" text="Usuarios" textFill="#f5f5f5">
-                    <font>
-                        <Font name="System Bold" size="12.0" />
-                    </font>
-                </Button>
-            <Button fx:id="btnLog" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irLog" styleClass="menu-boton" text="Log Usuario" textFill="#f5f5f5">
+            <Button fx:id="btnLog" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irLog" styleClass="menu-boton" text="Log Usuario" textFill="#f5f5f5">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/log.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
-              
-                <Region prefHeight="50.0" VBox.vgrow="ALWAYS" />
                 <Button fx:id="btnCerrarSesion" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="45.0" styleClass="menu-boton-salir" text="Cerrar Sesion">
                     <font>
                         <Font name="System Bold" size="14.0" />
