@@ -144,6 +144,13 @@ public class VentasController implements Initializable {
     @FXML
     private Label lblConteoSecciones;
 
+    //se me habiua olvidado agregar nit// tuve que a;adirlo en la db y cambiar todo
+    @FXML
+    private TextField txtNit;
+
+    @FXML
+    private ComboBox<String> cmbMetodoPago;
+
     //tabla carrito
     @FXML
     private TableView<TicketModel> tablaCarrito;
@@ -331,6 +338,27 @@ public class VentasController implements Initializable {
             aplicarFiltroSeccion();
         });
 
+        //llenar combo de metodos de pago
+        cmbMetodoPago.setItems(
+                FXCollections.observableArrayList("EFECTIVO", "TARJETA")
+        );
+        //por defecto seleccionamos efectivo, asi no hay que adivinar
+        cmbMetodoPago.setValue("EFECTIVO");
+
+        //si el vendedor cambia el metodo de pago hay que recalcular el resumen
+        //porque tarjeta agrega 2% al total
+        cmbMetodoPago.valueProperty().addListener((obs, oldVal, newVal) -> {
+            actualizarResumen();
+        });
+
+        //el admin no vende, solo consulta historial / ve recibos / anula
+        //asi que le ocultamos el boton Nueva Venta para que no se confunda
+        //(antes le aparecia pero al darle salia error porque no se selecciona cliente desde Clientes en rol admin)
+        if (Sesion.esAdmin()) {
+            btnNuevaVenta.setVisible(false);
+            btnNuevaVenta.setManaged(false);
+        }
+
         cargarTabla();
     }
 
@@ -500,6 +528,15 @@ public class VentasController implements Initializable {
         }
 
         sb.append("\n");
+
+        //NIT del cliente si esta en blanco lo guardamos como CF
+        //si el nit es null y esta en blanco le agregamos "NIT" 
+        if (cab.getNit() != null && !cab.getNit().isBlank()) {
+            sb.append("NIT:     ").append(cab.getNit()).append("\n");
+        } else {
+            sb.append("NIT:     CF\n");
+        }
+
         sb.append("Vendedor: ").append(cab.getVendedor()).append("\n");
         sb.append("----------------------------------------\n");
 
@@ -517,7 +554,17 @@ public class VentasController implements Initializable {
         sb.append("Subtotal:  Q").append(cab.getSubtotal()).append("\n");
         sb.append("Descuento: Q").append(cab.getDescuento()).append("\n");
         sb.append("IVA:       Q").append(cab.getTotalIva()).append("\n");
+
+        //solo mostramos la linea de comision si la venta fue con tarjeta
+        //asi en efectivo no se ve un Q0.00 que confunda al cliente
+        if ("TARJETA".equalsIgnoreCase(cab.getMetodoPago())) {
+            sb.append("Comision tarjeta (2%): Q").append(cab.getComision()).append("\n");
+        }
+
         sb.append("TOTAL:     Q").append(cab.getTotal()).append("\n");
+
+        //metodo de pago al final como en cualquier factura real
+        sb.append("Pago: ").append(cab.getMetodoPago() != null ? cab.getMetodoPago() : "EFECTIVO").append("\n");
 
         if (venta.isAnulada()) {
             sb.append("\n*** VENTA ANULADA ***");
@@ -662,6 +709,10 @@ public class VentasController implements Initializable {
         cmbFiltroSeccion.setValue("Todas");
         lblConteoSecciones.setText("");
 
+        //reseteamos los campos de facturacion al abrir formulario nuevo
+        txtNit.clear();
+        cmbMetodoPago.setValue("EFECTIVO");
+
         lblResumen.setText("Subtotal: Q0.00");
 
         lblErrorForm.setText("");
@@ -718,14 +769,23 @@ public class VentasController implements Initializable {
             precios.add(t.getPrecio().doubleValue());
         }
 
+        //leemos NIT y metodo de pago del formulario para calcular bien la comision
+        //si el combo aun no tiene valor raro pero por si acaso asumimos EFECTIVO
+        //
+        String nit = (txtNit != null) ? txtNit.getText() : "";
+        String metodoPago = (cmbMetodoPago.getValue() != null) ? cmbMetodoPago.getValue() : "EFECTIVO";
+
         VentasModel calculo = controller.calcularTotales(
                 clienteActual.getId(),
                 Sesion.getUsuario().getId(),
                 ids,
-                precios
+                precios,
+                nit,
+                metodoPago
         );
 
         //mostrar el % de descuento que se aplico segun cantidad de tickets
+        //el tama;o de lo que tiene el carrito 
         int cantidad = carrito.size();
         String infoDesc;
         if (cantidad >= 10) {
@@ -738,13 +798,22 @@ public class VentasController implements Initializable {
             infoDesc = "";
         }
 
-        lblResumen.setText(
-                "Tickets: " + cantidad + infoDesc
-                + "\nSubtotal: Q" + calculo.getSubtotal()
-                + "\nDescuento: Q" + calculo.getDescuento()
-                + "\nIVA (12%): Q" + calculo.getTotalIva()
-                + "\nTOTAL: Q" + calculo.getTotal()
-        );
+        //armamos el resumen, agregando la linea de comision solo si paga con tarjeta
+        //asi cuando es efectivo no se ve una linea con Q0.00 que solo confunde
+        StringBuilder sb = new StringBuilder();
+        sb.append("Tickets: ").append(cantidad).append(infoDesc).append("\n");
+        sb.append("Subtotal: Q").append(calculo.getSubtotal()).append("\n");
+        sb.append("Descuento: Q").append(calculo.getDescuento()).append("\n");
+        sb.append("IVA (12%): Q").append(calculo.getTotalIva()).append("\n");
+
+        if ("TARJETA".equalsIgnoreCase(metodoPago)) {
+            //le mostramos al vendedor cuanto sale la comision para que la explique al cliente
+            sb.append("Comision tarjeta (2%): Q").append(calculo.getComision()).append("\n");
+        }
+
+        sb.append("TOTAL: Q").append(calculo.getTotal());
+
+        lblResumen.setText(sb.toString());
     }
 
     //cerrar formulario
@@ -776,6 +845,13 @@ public class VentasController implements Initializable {
             return;
         }
 
+        //validar que haya un metodo de pago seleccionado
+        //si por alguna razon el combo quedo vacio no dejamos seguir
+        if (cmbMetodoPago.getValue() == null) {
+            lblErrorForm.setText("Seleccione el metodo de pago");
+            return;
+        }
+
         try {
             List<Integer> ticketIds = new ArrayList<>();
             List<Double> precios = new ArrayList<>();
@@ -786,12 +862,19 @@ public class VentasController implements Initializable {
                 precios.add(t.getPrecio().doubleValue());
             }
 
-            // calcular totales
+            //leemos NIT y metodo de pago del formulario
+            //NIT vacio se guarda como CF en el DAO/SP, no hay que validarlo aqui
+            String nit = txtNit.getText();
+            String metodoPago = cmbMetodoPago.getValue();
+
+            // calcular totales (incluye comision si es tarjeta)
             VentasModel venta = controller.calcularTotales(
                     clienteActual.getId(),
                     Sesion.getUsuario().getId(),
                     ticketIds,
-                    precios
+                    precios,
+                    nit,
+                    metodoPago
             );
 
             // guardar venta

@@ -23,6 +23,14 @@ public class VentasModel {
     private String clienteNombre;
     private String vendedor;
 
+    //campos nuevos para facturacion
+    //nit del cliente (si va vacio se guarda como CF)
+    private String nit;
+    //metodo de pago EFECTIVO o TARJETA
+    private String metodoPago;
+    //comision del 2% si se paga con tarjeta, sino queda en 0
+    private BigDecimal comision;
+
     public VentasModel(String clienteNombre, String vendedor) {
         this.clienteNombre = clienteNombre;
         this.vendedor = vendedor;
@@ -180,6 +188,31 @@ public class VentasModel {
 
     public void setTicketIds(List<Integer> ticketIds) {
         this.ticketIds = ticketIds;
+    }
+
+    //getters y setters de los campos nuevos
+    public String getNit() {
+        return nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
+    }
+
+    public String getMetodoPago() {
+        return metodoPago;
+    }
+
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
+    }
+
+    public BigDecimal getComision() {
+        return comision;
+    }
+
+    public void setComision(BigDecimal comision) {
+        this.comision = comision;
     }
 
     @Override

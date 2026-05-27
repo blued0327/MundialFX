@@ -35,6 +35,11 @@ public class ReciboModel {
     private BigDecimal totalIva;
     private BigDecimal total;
 
+    //campos nuevos para mostrar en el recibo
+    private String nit;
+    private String metodoPago;
+    private BigDecimal comision;
+
     public int getReciboNro() {
         return reciboNro;
     }
@@ -169,6 +174,31 @@ public class ReciboModel {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    //getters y setters de los campos nuevos del recibo
+    public String getNit() {
+        return nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
+    }
+
+    public String getMetodoPago() {
+        return metodoPago;
+    }
+
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
+    }
+
+    public BigDecimal getComision() {
+        return comision;
+    }
+
+    public void setComision(BigDecimal comision) {
+        this.comision = comision;
     }
 
     @Override

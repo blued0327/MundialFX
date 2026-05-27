@@ -125,6 +125,14 @@
                </placeholder>
             </TableView>
 
+            <!-- NIT del cliente. Si lo deja vacio se guarda como CF (consumidor final) -->
+            <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="NIT (vacio = CF)" />
+            <TextField fx:id="txtNit" promptText="Ej: 1234567-8 o dejar vacio" />
+
+            <!-- Metodo de pago. Si es tarjeta se suma 2% de comision al total -->
+            <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Método de pago" />
+            <ComboBox fx:id="cmbMetodoPago" maxWidth="1.7976931348623157E308" promptText="Seleccione metodo de pago" />
+
             <Label fx:id="lblResumen" style="-fx-text-fill: #08164B; -fx-font-size: 13; -fx-padding: 8; -fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 6;" text="Subtotal: Q0.00" wrapText="true" />
             <Label fx:id="lblErrorForm" textFill="#d2303e" wrapText="true" />
 

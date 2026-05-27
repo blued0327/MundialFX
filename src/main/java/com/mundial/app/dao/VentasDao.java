@@ -16,16 +16,25 @@ public class VentasDao {
     public static final double DESCUENTO_5 = 0.05;
     public static final double DESCUENTO_7 = 0.07;
 
+    //comision del 2% que cobra el banco si el cliente paga con tarjeta
+    //esta comision la paga el cliente, se suma al total
+    public static final double COMISION_TARJETA = 0.02;
+
+    //metodos de pago permitidos (deben coincidir con el CHECK de la BD)
+    public static final String PAGO_EFECTIVO = "EFECTIVO";
+    public static final String PAGO_TARJETA = "TARJETA";
+
     public int registrarVenta(VentasModel venta) throws SQLException { //sirve para avisar que vamos atrabajar con SQL y puede que hayn errores
-        String sql = "SELECT sp_venta_registrar(?, ?, ?, ?, ?, ?, ?)";
+        //el SP ahora recibe 10 parametros: agregamos nit, metodo_pago y comision al final
+        String sql = "SELECT sp_venta_registrar(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, venta.getClienteId());
             ps.setInt(2, venta.getUsuarioId());
 
-            //convertimos la lista de ids a un array que entiende postgresql ya que postgress tiene un array propio no una list 
-            Integer[] ids = venta.getTicketIds().toArray(new Integer[0]); 
+            //convertimos la lista de ids a un array que entiende postgresql ya que postgress tiene un array propio no una list
+            Integer[] ids = venta.getTicketIds().toArray(new Integer[0]);
             Array pgArray = conn.createArrayOf("integer", ids);
             ps.setArray(3, pgArray);
 
@@ -33,13 +42,18 @@ public class VentasDao {
             ps.setBigDecimal(5, venta.getDescuento());
             ps.setBigDecimal(6, venta.getTotalIva());
             ps.setBigDecimal(7, venta.getTotal());
-            
-            
-            //aqui atrapamos el v_venta_id de la db     
+
+            //campos nuevos: nit, metodo de pago y comision del 2%
+            //si por alguna razon vienen nulos ponemos los defaults para no tronar
+            ps.setString(8, venta.getNit() != null ? venta.getNit() : "CF");
+            ps.setString(9, venta.getMetodoPago() != null ? venta.getMetodoPago() : PAGO_EFECTIVO);
+            ps.setBigDecimal(10, venta.getComision() != null ? venta.getComision() : BigDecimal.ZERO);
+
+            //aqui atrapamos el v_venta_id de la db
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    int ventaId = rs.getInt(1); //si es exitoso  trae el id 
-                    venta.setId(ventaId);   // lo seteamos en venta model y retornamos 
+                    int ventaId = rs.getInt(1); //si es exitoso  trae el id
+                    venta.setId(ventaId);   // lo seteamos en venta model y retornamos
                     return ventaId;
                 }
             }
@@ -66,9 +80,12 @@ public class VentasDao {
     }
 
     //esta no toca BD, solo calculos, asi que no necesita conexion
+    //ahora recibe tambien nit y metodoPago para calcular la comision del 2% si es tarjeta
     public VentasModel calcularTotales(int clienteId, int usuarioId,
             List<Integer> ticketIds,
-            List<Double> precios) {
+            List<Double> precios,
+            String nit,
+            String metodoPago) {
         int cantidad = precios.size();
 
         //subtotal sin descuento ni iva
@@ -86,9 +103,22 @@ public class VentasDao {
         //base gravable e iva
         double baseGravable = subtotal - descuento;
         double totalIva = baseGravable * IVA;
-        double total = baseGravable + totalIva;
 
-        return new VentasModel(
+        //preTotal antes de la comision (lo que pagaria si fuera efectivo)
+        double preTotal = baseGravable + totalIva;
+
+        //si el cliente paga con tarjeta cobramos 2% extra de comision
+        //esa comision la paga el cliente, se suma al total
+        double comision = 0;
+        if (PAGO_TARJETA.equalsIgnoreCase(metodoPago)) {
+            comision = preTotal * COMISION_TARJETA;
+        }
+
+        //total final con comision incluida si aplica
+        double total = preTotal + comision;
+
+        //construimos el modelo y le seteamos los campos nuevos
+        VentasModel venta = new VentasModel(
                 clienteId,
                 usuarioId,
                 BigDecimal.valueOf(subtotal),
@@ -97,6 +127,13 @@ public class VentasDao {
                 BigDecimal.valueOf(total),
                 ticketIds
         );
+
+        //si el nit viene vacio o null lo guardamos como CF (consumidor final)
+        venta.setNit((nit == null || nit.isBlank()) ? "CF" : nit.trim());
+        venta.setMetodoPago(metodoPago != null ? metodoPago : PAGO_EFECTIVO);
+        venta.setComision(BigDecimal.valueOf(comision));
+
+        return venta;
     }
 
     public List<ReciboModel> obtenerRecibo(int ventaId) throws SQLException {
@@ -167,6 +204,26 @@ public class VentasDao {
         recibo.setDescuento(rs.getBigDecimal("descuento"));
         recibo.setTotalIva(rs.getBigDecimal("total_iva"));
         recibo.setTotal(rs.getBigDecimal("total"));
+
+        //campos nuevos: nit, metodo de pago, comision
+        //se envuelven en try porque si el SP aun no devuelve estas columnas no queremos que truene
+        //una vez que actualices sp_venta_obtener_recibo para incluirlas, funcionara automatico
+        try {
+            recibo.setNit(rs.getString("nit"));
+        } catch (SQLException e) {
+            recibo.setNit("CF");
+        }
+        try {
+            recibo.setMetodoPago(rs.getString("metodo_pago"));
+        } catch (SQLException e) {
+            recibo.setMetodoPago(PAGO_EFECTIVO);
+        }
+        try {
+            recibo.setComision(rs.getBigDecimal("comision"));
+        } catch (SQLException e) {
+            recibo.setComision(BigDecimal.ZERO);
+        }
+
         return recibo;
     }
 
@@ -185,6 +242,25 @@ public class VentasDao {
         venta.setVendedor(rs.getString("vendedor"));
         venta.setTotal(rs.getBigDecimal("total"));
         venta.setAnulada(rs.getBoolean("anulada"));
+
+        //tambien intentamos leer los campos nuevos si el SP los devuelve
+        //si no, queda con valores por defecto y no truena
+        try {
+            venta.setNit(rs.getString("nit"));
+        } catch (SQLException e) {
+            venta.setNit("CF");
+        }
+        try {
+            venta.setMetodoPago(rs.getString("metodo_pago"));
+        } catch (SQLException e) {
+            venta.setMetodoPago(PAGO_EFECTIVO);
+        }
+        try {
+            venta.setComision(rs.getBigDecimal("comision"));
+        } catch (SQLException e) {
+            venta.setComision(BigDecimal.ZERO);
+        }
+
         return venta;
     }
 }
