@@ -114,4 +114,15 @@ public class BoletosController {
             return false;
         }
     }
+
+    //elimina de un solo viaje todos los tickets DISPONIBLE/RESERVADO de un partido
+    //lo usamos cuando se cancela un partido para no andar borrando uno por uno
+    public int eliminarPorPartido(int partidoId) {
+        try {
+            return dao.eliminarPorPartido(partidoId);
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar tickets del partido " + e.getMessage());
+            return 0;
+        }
+    }
 }

@@ -1,7 +1,9 @@
 package com.datum.mundialfx;
 
 import com.mundial.app.controller.PartidoController;
+import com.mundial.app.controller.BoletosController;
 import com.mundial.app.model.PartidoModel;
+import com.mundial.app.model.TicketModel;
 import com.mundial.app.util.Sesion;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -84,6 +86,8 @@ public class PartidosController implements Initializable {
 
     //instancias
     private final PartidoController controller = new PartidoController();
+    //tambien necesitamos el controller de boletos para tronar los tickets cuando se cancela un partido
+    private final BoletosController controllerBo = new BoletosController();
     private final ObservableList<PartidoModel> lista = FXCollections.observableArrayList();
     private int idEditar = -1;
 
@@ -317,15 +321,47 @@ public class PartidosController implements Initializable {
     }
 
     //cuando admin cancela un partido, este cambia a estado CANCELADO
+    //y aparte mandamos a tronar todos los tickets DISPONIBLES de ese partido
+    //para que nadie pueda seguir vendiendolos
+    //los tickets VENDIDOS los respetamos porque ya existen ventas registradas con ellos
+    //el admin tendria que anular esas ventas aparte si quiere reembolsar
     private void cancelarPartido(PartidoModel partido) {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Confirmar");
         confirm.setHeaderText(null);
-        confirm.setContentText("¿Desea cancelar el partido " + partido.getEquipoLocal() + " vs " + partido.getEquipoVisitante() + "?");
+        confirm.setContentText("¿Desea cancelar el partido " + partido.getEquipoLocal() + " vs " + partido.getEquipoVisitante() + "?"
+                + "\n\nSe eliminaran todos los tickets disponibles. Los tickets ya vendidos no se tocan.");
         confirm.showAndWait().ifPresent(respuesta -> {
             if (respuesta == ButtonType.OK) {
                 boolean ok = controller.cambiarEstado(partido.getId(), "CANCELADO");
                 if (ok) {
+
+                    //antes contabamos los vendidos recorriendo todos los tickets uno por uno
+                    //y luego los eliminabamos uno por uno tambien -- con 20000 tickets era lentisimo
+                    //ahora contamos los vendidos con un solo query y eliminamos en batch con otro
+                    //pasamos de N+1 viajes a la BD a solo 2 viajes
+
+                    int vendidosIntactos = 0;
+
+                    //recorremos solo para contar los VENDIDOS (no se eliminan)
+                    //esto se podria optimizar tambien con un COUNT en BD si se vuelve lento
+                    for (TicketModel t : controllerBo.consultarPorPartido(partido.getId())) {
+                        if ("VENDIDO".equals(t.getEstado())) {
+                            vendidosIntactos++;
+                        }
+                    }
+
+                    //elimina TODOS los DISPONIBLE y RESERVADO en una sola operacion
+                    //el SP devuelve la cantidad eliminada
+                    int eliminados = controllerBo.eliminarPorPartido(partido.getId());
+
+                    //mensaje final con el resumen para el admin
+                    String msg = "Partido cancelado. Tickets eliminados: " + eliminados + ".";
+                    if (vendidosIntactos > 0) {
+                        msg += "\nHay " + vendidosIntactos + " ticket(s) ya vendido(s) -- anule esas ventas manualmente si va a reembolsar.";
+                    }
+                    mostrarAlerta(Alert.AlertType.INFORMATION, msg);
+
                     cargarTabla();
                 } else {
                     mostrarAlerta(Alert.AlertType.ERROR, "No se pudo cancelar el partido.");

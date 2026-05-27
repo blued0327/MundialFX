@@ -99,6 +99,24 @@ public class BoletosDao {
         return false;
     }
 
+    //elimina todos los tickets DISPONIBLES y RESERVADOS de un partido en un solo viaje a BD
+    //devuelve la cantidad eliminada -- 
+    // los tickets VENDIDOS no se tocan, eso se valida en el SP
+    public int eliminarPorPartido(int partidoId) throws SQLException {
+        String sql = "SELECT sp_ticket_eliminar_por_partido(?)";
+
+        try (Connection conn = CreateConnection.getInstancia().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, partidoId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
     public TicketModel consultarPorId(int idTicket) throws SQLException {
         String sql = "SELECT * FROM sp_ticket_por_id(?)";
 

@@ -274,10 +274,7 @@ public class TicketController implements Initializable {
             }
 
             int generados = controller.generarMasivo(
-                    partido.getId(),
-                    cantVip, precioVip,
-                    cantPref, precioPref,
-                    cantGen, precioGen
+                    partido.getId(),cantVip, precioVip,cantPref, precioPref,cantGen, precioGen
             );
 
             if (generados > 0) {
