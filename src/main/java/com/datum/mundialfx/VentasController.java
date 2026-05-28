@@ -689,6 +689,14 @@ public class VentasController implements Initializable {
 
         clienteActual = ClienteSeleccionado.getCliente();
 
+        if (!clienteActual.isEstado()) {
+            ClienteSeleccionado.limpiar();
+            clienteActual = null;
+            mostrarAlerta(Alert.AlertType.WARNING,
+                    "El cliente seleccionado está inactivo y no puede realizar compras.");
+            return;
+        }
+
         lblCliente.setText(
                 clienteActual.getNombre() + " " + clienteActual.getApellido()
         );

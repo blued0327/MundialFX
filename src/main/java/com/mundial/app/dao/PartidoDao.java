@@ -1,9 +1,8 @@
-// MIGRACION: package cambiado de "dao" a "com.mundial.app.dao"
 package com.mundial.app.dao;
 
-// MIGRACION: import ajustado de "connection.CreateConnection" a "com.mundial.app.connection.CreateConnection"
+
+
 import com.mundial.app.connection.CreateConnection;
-// MIGRACION: import ajustado de "model.PartidoModel" a "com.mundial.app.model.PartidoModel"
 import com.mundial.app.model.PartidoModel;
 
 import java.sql.*;

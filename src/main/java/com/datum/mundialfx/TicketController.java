@@ -39,6 +39,8 @@ public class TicketController implements Initializable {
     private ComboBox<PartidoModel> cmbPartido;
     @FXML
     private Button btnGenerarMasivo;
+    @FXML
+    private Button btnGenerar;
 
     //tabla
     @FXML
@@ -220,6 +222,7 @@ public class TicketController implements Initializable {
             return;
         }
 
+        btnGenerar.setDisable(true);
         try {
             //leer cantidades y precios
             int cantVip = parsearEntero(txtCantVip.getText());
@@ -290,6 +293,8 @@ public class TicketController implements Initializable {
         } catch (Exception e) {
             lblErrorForm.setText("Error: " + e.getMessage());
             e.printStackTrace();
+        } finally {
+            btnGenerar.setDisable(false);
         }
     }
 

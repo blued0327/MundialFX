@@ -20,7 +20,7 @@ public class VentaController {
     
     private final VentasDao dao = new VentasDao();
 
-    //ahora tambien recibe nit y metodo de pago para calcular la comision del 2% si es tarjeta
+    //Metodo que que le da al dao // le agrege ahgora lo de metodo de pago
     public VentasModel calcularTotales(int clienteId, int usuarioId,
             List<Integer> ticketIds,
             List<Double> precios,

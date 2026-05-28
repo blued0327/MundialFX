@@ -1,4 +1,6 @@
-// MIGRACION: package cambiado de "model" a "com.mundial.app.model"
+
+
+
 package com.mundial.app.model;
 
 import java.math.BigDecimal;

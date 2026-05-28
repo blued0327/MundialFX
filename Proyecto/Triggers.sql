@@ -21,10 +21,19 @@ drop function if exists fn_anular_venta cascade ;
 CREATE OR REPLACE FUNCTION fn_anular_venta()
 RETURNS TRIGGER AS $$
 BEGIN
-    -- Restaurar tickets a disponible
-    UPDATE ticket SET estado = 'DISPONIBLE'
-    WHERE id IN (
-        SELECT ticket_id FROM detalle_venta WHERE venta_id = NEW.venta_id
+    -- Solo restaura a DISPONIBLE si el partido NO está cancelado
+    -- Si el partido está CANCELADO los tickets quedan como están (no sirven de nada)
+    UPDATE ticket t
+    SET estado = 'DISPONIBLE'
+    WHERE t.id IN (
+        SELECT dv.ticket_id
+        FROM detalle_venta dv
+        WHERE dv.venta_id = NEW.venta_id
+    )
+    AND EXISTS (
+        SELECT 1 FROM partido p
+        WHERE p.id = t.partido_id
+        AND p.estado != 'CANCELADO'
     );
 
     -- Marcar venta como anulada

@@ -1,4 +1,5 @@
-// MIGRACION: package cambiado de "connection" a "com.mundial.app.connection"
+
+
 package com.mundial.app.connection;
 import java.io.IOException;
 import java.io.InputStream;

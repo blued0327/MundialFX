@@ -266,8 +266,15 @@ public class ClientesController implements Initializable {
         });
     }
 
-  //cree esta clase para el boton,asi supongo que seria mas facul para el vendedor 
+    //cree esta clase para el boton,asi supongo que seria mas facul para el vendedor
+    //tiene una validacion en el cual estado del cliente es inactivo tire un mensaje
     private void seleccionarParaVenta(ClienteModel cliente) {
+        if (!cliente.isEstado()) {
+            mostrarAlerta(Alert.AlertType.WARNING,
+                    "El cliente " + cliente.getNombre() + " " + cliente.getApellido()
+                    + " esta inactivo y no puede realizar compras ");
+            return;
+        }
         ClienteSeleccionado.seleccionar(cliente);
         try {
             App.setRoot("Ventas");
@@ -364,7 +371,5 @@ public class ClientesController implements Initializable {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-    
-    
 
 }

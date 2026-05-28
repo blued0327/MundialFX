@@ -1,4 +1,3 @@
-// MIGRACION: package cambiado de "dao" a "com.mundial.app.dao"
 package com.mundial.app.dao;
 
 import java.sql.*;

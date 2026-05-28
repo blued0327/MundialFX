@@ -1,9 +1,8 @@
-// MIGRACION: package cambiado de "controller" a "com.mundial.app.controller"
+
 package com.mundial.app.controller;
 
-// MIGRACION: import ajustado de "dao.PartidoDao" a "com.mundial.app.dao.PartidoDao"
+
 import com.mundial.app.dao.PartidoDao;
-// MIGRACION: import ajustado de "model.PartidoModel" a "com.mundial.app.model.PartidoModel"
 import com.mundial.app.model.PartidoModel;
 
 import java.time.LocalDateTime;

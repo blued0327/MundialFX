@@ -76,7 +76,7 @@
                 <Label fx:id="lblErrorForm" textFill="#d2303e" wrapText="true" />
                 <HBox spacing="8.0">
                     <children>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#generarMasivo" styleClass="boton-insertar" text="Generar" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnGenerar" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#generarMasivo" styleClass="boton-insertar" text="Generar" HBox.hgrow="ALWAYS" />
                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cerrarFormulario" styleClass="boton-editar" text="Cancelar" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>

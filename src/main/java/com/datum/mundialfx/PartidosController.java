@@ -330,7 +330,7 @@ public class PartidosController implements Initializable {
         confirm.setTitle("Confirmar");
         confirm.setHeaderText(null);
         confirm.setContentText("¿Desea cancelar el partido " + partido.getEquipoLocal() + " vs " + partido.getEquipoVisitante() + "?"
-                + "\n\nSe eliminaran todos los tickets disponibles. Los tickets ya vendidos no se tocan.");
+                + "\n\nSe eliminaran todos los tickets disponibles. Los tickets ya vendidos no se tocan ");
         confirm.showAndWait().ifPresent(respuesta -> {
             if (respuesta == ButtonType.OK) {
                 boolean ok = controller.cambiarEstado(partido.getId(), "CANCELADO");
@@ -358,7 +358,7 @@ public class PartidosController implements Initializable {
                     //mensaje final con el resumen para el admin
                     String msg = "Partido cancelado. Tickets eliminados: " + eliminados + ".";
                     if (vendidosIntactos > 0) {
-                        msg += "\nHay " + vendidosIntactos + " ticket(s) ya vendido(s) -- anule esas ventas manualmente si va a reembolsar.";
+                        msg += "\nHay " + vendidosIntactos + " ticket(s) ya vendido(s), anule esas ventas manualmente si va a reembolsar ";
                     }
                     mostrarAlerta(Alert.AlertType.INFORMATION, msg);
 
