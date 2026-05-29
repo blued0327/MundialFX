@@ -100,13 +100,13 @@ public class PartidosController implements Initializable {
         //llenar combos de hora 00-23 y minutos 00-59
         //se llena de 0 hasta 23 se auto incrementa un for nomrla
         for (int i = 0; i < 24; i++) {
-            cmbHora.getItems().add(String.format("%02d", i));
-        }
+            cmbHora.getItems().add(String.format("%02d", i));//Va al combobox de las horas Abre su lista de opciones Prepara un espacio para meter algo nuevo.Convierte el número 5 en el texto "05".
+        } 
         for (int i = 0; i < 60; i++) {
             cmbMinuto.getItems().add(String.format("%02d", i));
         }
 
-        //mapear columnas--- decir que datos va a mostrar
+        //mapear columnas osea  decir que datos va a mostrar para que entiendan 
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colEstadio.setCellValueFactory(new PropertyValueFactory<>("estadio"));
         colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
@@ -118,14 +118,18 @@ public class PartidosController implements Initializable {
         });
 
         //columna fecha tambien formateada
-        colFecha.setCellValueFactory(cell -> {
-            PartidoModel p = cell.getValue();
-            if (p.getFecha() == null) {
+        colFecha.setCellValueFactory(cell -> { //formatea de forma en que esta dentro de { }
+            PartidoModel p = cell.getValue(); //obetenemos el dato
+            if (p.getFecha() == null) {   //si es nulo pone vacio osea en vacio
+                
+                                        //SimpleStringProperty es un string especial para fx
                 return new javafx.beans.property.SimpleStringProperty("");
             }
-            return new javafx.beans.property.SimpleStringProperty(p.getFecha().format(formatoFecha));
+            return new javafx.beans.property.SimpleStringProperty(p.getFecha().format(formatoFecha)); //sino setea el dato en formato fecha y lo formateamos 
         });
-
+        
+        
+        //esta usa updataItem porque no solo va a buscar el dato y mostrarlo sino que va a cambiar el css
         //pinta el estado con color segun corresponda
         colEstado.setCellFactory(col -> new TableCell<>() {
             @Override
@@ -236,7 +240,7 @@ public class PartidosController implements Initializable {
         if (conf) {
             cargarTabla();
         } else {
-            mostrarAlerta(Alert.AlertType.ERROR, "No se pudo reabrir el partido.");
+            mostrarAlerta(Alert.AlertType.ERROR, "No se pudo reabrir el partido ");
         }
     }
 
@@ -356,11 +360,11 @@ public class PartidosController implements Initializable {
                     int eliminados = controllerBo.eliminarPorPartido(partido.getId());
 
                     //mensaje final con el resumen para el admin
-                    String msg = "Partido cancelado. Tickets eliminados: " + eliminados + ".";
+                    String mensage = "Partido cancelado. Tickets eliminados: " + eliminados + ".";
                     if (vendidosIntactos > 0) {
-                        msg += "\nHay " + vendidosIntactos + " ticket(s) ya vendido(s), anule esas ventas manualmente si va a reembolsar ";
+                        mensage += "\nHay " + vendidosIntactos + " ticket(s) ya vendido(s), anule esas ventas manualmente si va a reembolsar ";
                     }
-                    mostrarAlerta(Alert.AlertType.INFORMATION, msg);
+                    mostrarAlerta(Alert.AlertType.INFORMATION, mensage);
 
                     cargarTabla();
                 } else {

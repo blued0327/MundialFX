@@ -9,16 +9,18 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import com.mundial.app.dao.BoletosDao;
 
 /**
  *
  * @author rchar
  */
 public class BoletosController {
+        
+    //instasncia de boletos dao
+    private final BoletosDao dao = new BoletosDao();
 
-    private final com.mundial.app.dao.BoletosDao dao = new com.mundial.app.dao.BoletosDao();
-
-    // Genera un ticket individual
+    // Genera un ticket individua-- en des uso
     public boolean generarTicket(int partidoId, String numeroAsiento, String seccion, double precio) {
         try {
             TicketModel t = new TicketModel();

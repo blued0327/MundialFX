@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="950.0" stylesheets="@../../../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.datum.mundialfx.TicketController">
+    <top>
+        <HBox prefHeight="100.0" prefWidth="950.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <Button mnemonicParsing="false" onAction="#volverMenu" prefHeight="33.0" prefWidth="96.0" styleClass="boton-editar" text=" Volver" />
+                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../Images/dollar_12823557.png" />
+                    </image>
+                </ImageView>
+                <Label prefHeight="30.0" prefWidth="216.0" style="-fx-text-fill: #08164B; -fx-font-weight: bold; -fx-font-size: 20;" text="Gestión de Tickets" />
+                <Region prefHeight="70.0" prefWidth="81.0" HBox.hgrow="ALWAYS" />
+                <Label prefHeight="17.0" prefWidth="59.0" style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Partido:" />
+                <ComboBox fx:id="cmbPartido" prefHeight="25.0" prefWidth="174.0" promptText="Seleccione un partido" />
+                <Button fx:id="btnGenerarMasivo" mnemonicParsing="false" onAction="#abrirGenerarMasivo" prefHeight="33.0" prefWidth="124.0" styleClass="boton-insertar" text="Generar Tickets" />
+            </children>
+        </HBox>
+    </top>
+    <center>
+        <VBox prefHeight="498.0" prefWidth="971.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" />
+            </padding>
+            <children>
+                <TableView fx:id="tablaTickets" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colId" prefWidth="60.0" text="ID" />
+                        <TableColumn fx:id="colAsiento" prefWidth="120.0" text="Asiento" />
+                        <TableColumn fx:id="colSeccion" prefWidth="130.0" text="Sección" />
+                        <TableColumn fx:id="colPrecio" prefWidth="100.0" text="Precio" />
+                        <TableColumn fx:id="colEstado" prefWidth="100.0" text="Estado" />
+                        <TableColumn fx:id="colAcciones" prefWidth="240.0" text="Acciones" />
+                    </columns>
+                    <placeholder>
+                        <Label text="Seleccione un partido para ver sus tickets." />
+                    </placeholder>
+                </TableView>
+            </children>
+        </VBox>
+    </center>
+    <right>
+        <VBox fx:id="panelFormulario" managed="false" prefWidth="300.0" spacing="10.0" style="-fx-background-color: white; -fx-border-color: #CDD4E8; -fx-border-width: 0 0 0 1; -fx-padding: 20;" visible="false" BorderPane.alignment="TOP_CENTER">
+            <children>
+                <Label fx:id="lblTituloForm" style="-fx-text-fill: #08164B; -fx-font-weight: bold; -fx-font-size: 15;" text="Generar Tickets" />
+                <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Cantidad VIP" />
+                <TextField fx:id="txtCantVip" promptText="Ej: 100" style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
+                <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Precio VIP" />
+                <TextField fx:id="txtPrecioVip" promptText="Ej: 500.00" style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
+                <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Cantidad Preferencial" />
+                <TextField fx:id="txtCantPref" promptText="Ej: 500" style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
+                <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Precio Preferencial" />
+                <TextField fx:id="txtPrecioPref" promptText="Ej: 250.00" style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
+                <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Cantidad General" />
+                <TextField fx:id="txtCantGen" promptText="Ej: 2000" style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
+                <Label style="-fx-text-fill: #5a647d; -fx-font-weight: bold;" text="Precio General" />
+                <TextField fx:id="txtPrecioGen" promptText="Ej: 100.00" style="-fx-background-color: #F8FAFF; -fx-border-color: #CDD4E8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8;" />
+                <Label fx:id="lblErrorForm" textFill="#d2303e" wrapText="true" />
+                <HBox spacing="8.0">
+                    <children>
+                        <Button fx:id="btnGenerar" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#generarMasivo" styleClass="boton-insertar" text="Generar" HBox.hgrow="ALWAYS" />
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cerrarFormulario" styleClass="boton-editar" text="Cancelar" HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </right>
+</BorderPane>

@@ -17,7 +17,7 @@ public class IpUtil {
 
             e.printStackTrace();
 
-            return "Depsonocida";
+            return "Desconocida";
         }
     }
 }

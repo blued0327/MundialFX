@@ -39,7 +39,7 @@ public class UsuarioController {
         //hashear la password con bcrypt antes de mandarla a la BD
         String hash = PasswordUtil.hashear(password);
 
-        //usamos el constructor de 4 args que si setea el estado
+        //usamos el constructor de 4 argumentas  que si setea el estado
         UsuarioModel user = new UsuarioModel(username, hash, rol, estado);
 
         return dao.insertar(user) > 0;

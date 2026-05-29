@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../../../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.datum.mundialfx.MenuVendedorController">
+    <left>
+        <VBox fillWidth="true" prefWidth="220.0" spacing="5.0" style="-fx-background-color: #08164B; -fx-padding: 20;" BorderPane.alignment="TOP_CENTER">
+            <children>
+                <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../Images/logo.png" />
+                    </image>
+                </ImageView>
+                <Label text="Mundial 2026" textFill="#ebe7e7">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                    <padding>
+                        <Insets bottom="20.0" top="10.0" />
+                    </padding>
+                </Label>
+                <Button fx:id="btnVentas" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irVentas" styleClass="menu-boton" text="Ventas" textFill="#f5f5f5">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../Images/Ventas.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnCliente" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irCliente" styleClass="menu-boton" text="Clientes" textFill="#f5f5f5">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../Images/Clientes.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnPartido" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irPartido" styleClass="menu-boton" text="Partidos" textFill="#f5f5f5">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../Images/Partido.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnTicket" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irTicket" styleClass="menu-boton" text="Tickets" textFill="#f5f5f5">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../Images/ticket.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnReporte" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#irReporte" styleClass="menu-boton" text="Reportes" textFill="#f5f5f5">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../Images/curriculum-vitae_16416418.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Region prefHeight="50.0" VBox.vgrow="ALWAYS" />
+                <Button fx:id="btnCerrarSesion" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="45.0" styleClass="menu-boton-salir" text="Cerrar Sesion">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+    </left>
+    <center>
+        <VBox prefHeight="200.0" prefWidth="100.0" spacing="8.0" style="-fx-background-color: #F4F6F8; -fx-padding: 30;" BorderPane.alignment="TOP_LEFT">
+            <children>
+                <Label fx:id="lblBienvenida" style="-fx-text-fill: #08164B; -fx-font: Bold 22;" text="Bienvenido">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblRol" style="-fx-text-fill: #5A647D;" text="Rol">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                </Label>
+                <BorderPane prefHeight="443.0" prefWidth="720.0">
+                    <center>
+                        <ImageView fitHeight="483.0" fitWidth="639.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                            <image>
+                                <Image url="@../../../Images/Menu.png" />
+                            </image>
+                        </ImageView>
+                    </center>
+                </BorderPane>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
