@@ -1,0 +1,220 @@
+Commits on May 21, 2026
+Renombrar PartidoDao y limpiar archivos generados
+jdmm0jdmm0
+jdmm0
+authored and
+jdmm0
+committed
+last week
+Partido DAO
+jdmm0jdmm0
+jdmm0
+authored and
+jdmm0
+committed
+last week
+Clase para el icono y logo en resources
+jdmm0jdmm0
+jdmm0
+authored and
+jdmm0
+committed
+last week
+Merge pull request #5 from blued0327/feature/clientes
+blued0327
+blued0327
+authored
+last week
+Verified
+Merge branch 'develop' into feature/clientes
+blued0327
+blued0327
+authored
+last week
+Verified
+Resolver conflictos de merge
+jdmm0jdmm0
+jdmm0
+authored and
+jdmm0
+committed
+last week
+Configurar main para abrir LoginView
+jdmm0jdmm0
+jdmm0
+authored and
+jdmm0
+committed
+last week
+jdmm0
+authored and
+jdmm0
+committed
+last week
+Merge pull request #6 from blued0327/feature/partidos
+blued0327
+blued0327
+authored
+last week
+Verified
+Primera View terminada, aun le falta unas cosillas pero ya me dio hueva alch
+Luis PedroLuis Pedro
+Luis Pedro
+authored and
+Luis Pedro
+committed
+last week
+Menu principal, usuarios view
+jdmm0jdmm0
+jdmm0
+authored and
+jdmm0
+committed
+last week
+Correccion de ClientesModel, ClientesController y realización de la primera view
+Ronald-22
+Ronald-22
+committed
+last week
+Ordenamiento
+Luis PedroLuis Pedro
+Luis Pedro
+authored and
+Luis Pedro
+committed
+last week
+PartidoModel terminado
+Luis PedroLuis Pedro
+Luis Pedro
+authored and
+Luis Pedro
+committed
+last week
+Creaccion de PartidosController
+Luis PedroLuis Pedro
+Luis Pedro
+authored and
+Luis Pedro
+committed
+last week
+PartidosDAO creados
+Luis PedroLuis Pedro
+Luis Pedro
+authored and
+Luis Pedro
+committed
+last week
+login, menu y terminacion de controller
+jdmm0jdmm0
+jdmm0
+authored and
+jdmm0
+committed
+last week
+DAO con sp
+jdmm0jdmm0
+jdmm0
+authored and
+jdmm0
+committed
+last week
+Creacion de carpeta UTIL, Funcion de password, Sesion para verficar, Recactor a controller
+jdmm0jdmm0
+jdmm0
+authored and
+jdmm0
+committed
+last week
+Merge pull request #2 from blued0327/feature/clientes
+blued0327
+blued0327
+authored
+last week
+Verified
+Merge branch 'develop' into feature/clientes
+blued0327
+blued0327
+authored
+last week
+Verified
+Resetear VentasDao - pendiente de reescribir
+jdmm0jdmm0
+jdmm0
+authored and
+jdmm0
+committed
+last week
+Resolver conflicto en DetalleVentaModel
+jdmm0jdmm0
+jdmm0
+authored and
+jdmm0
+committed
+last week
+Actualizar ClienteDao para invocar stored procedures
+jdmm0jdmm0
+jdmm0
+authored and
+jdmm0
+committed
+last week
+Merge pull request #3 from blued0327/feature/ventas
+blued0327
+blued0327
+authored
+last week
+Verified
+se cambio el dao para partidos
+jdmm0jdmm0
+jdmm0
+authored and
+jdmm0
+committed
+last week
+Resuelve conflictos en VentasModel, VentasDao y DetalleVentaModel
+author
+Vane
+committed
+last week
+Agrega VentasModel, VentasDao, DetalleVentaModel y DetalleVentaDao
+author
+Vane
+committed
+last week
+Commits on May 20, 2026
+Creacion de BoletosDao y una creación rápida en el main para su prueba
+Ronald-22
+Ronald-22
+committed
+last week
+Model boletos culminado
+Ronald-22
+Ronald-22
+committed
+last week
+Model de boletos creado
+Ronald-22
+Ronald-22
+committed
+last week
+Commits on May 19, 2026
+Agregue las funcionalidades de ventas, Vanessa
+PA0L0-123
+PA0L0-123
+committed
+last week
+Corrección de dao y model
+Ronald-22
+Ronald-22
+committed
+last week
+Creacion de Modelo Ventas
+Vanekms02
+Vanekms02
+committed
+last week
+Creacion de modelo ventas
+Vanekms02
+Vanekms02
+committed
+last week
